@@ -123,6 +123,7 @@
     <modules>
         <module>hadoop-app-1</module>
         <module>hadoop-wordcount-1</module>
+        <module>hadoop-wordcount-tool-runner-1</module>
     </modules>
 
 </project>
