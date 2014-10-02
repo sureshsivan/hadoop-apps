@@ -1,6 +1,9 @@
 http://s3.amazonaws.com/learn-hadoop/hadoop-infiniteskills-richmorrow-class.tgz;
 http://s3.amazonaws.com/learn-hadoop/4-node-cluster-setup-script.txt
 
+master1:50070   # hadoop GUI
+
+
 tree /public_dataset/ -d;
 /public_dataset/
 ├── infiniteskills
