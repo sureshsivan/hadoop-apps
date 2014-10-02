@@ -19,8 +19,8 @@ public class WordCount {
 
         wordCountJobConf.setJarByClass(WordCount.class);
         wordCountJobConf.setJobName("Simple Word count job");
-        wordCountJobConf.setMapperClass(null);
-        wordCountJobConf.setReducerClass(null);
+//        wordCountJobConf.setMapperClass(null);
+//        wordCountJobConf.setReducerClass(null);
 //        wordCountJobConf.setPartitionerClass(null);
 //        wordCountJobConf.setCombinerClass(null);
 
@@ -32,6 +32,10 @@ public class WordCount {
         boolean success = wordCountJob.waitForCompletion(true);
 
         System.exit(success ? 0 : 1);
+
+
+//        org.apache.hadoop.mapreduce.lib.input.FileInputFormat.addInputPath();
+
 
 
     }
