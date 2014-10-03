@@ -3,6 +3,7 @@ package com.suresh.learn;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.FileOutputFormat;
+import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
 
@@ -27,17 +28,11 @@ public class WordCount {
         FileInputFormat.addInputPath(wordCountJobConf, new Path(args[0]));
         FileOutputFormat.setOutputPath(wordCountJobConf, new Path(args[1]));
 
-        Job wordCountJob = new Job(wordCountJobConf);
+        JobClient.runJob(wordCountJobConf).waitForCompletion();
 
-        boolean success = wordCountJob.waitForCompletion(true);
-
-        System.exit(success ? 0 : 1);
-
-
-//        org.apache.hadoop.mapreduce.lib.input.FileInputFormat.addInputPath();
-
-
-
+//        Job wordCountJob = new Job(wordCountJobConf);
+//        boolean success = wordCountJob.waitForCompletion(true);
+//        System.exit(success ? 0 : 1);
     }
 
 }
