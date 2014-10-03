@@ -2,12 +2,13 @@ package com.suresh.learn;
 
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.mapred.FileInputFormat;
-import org.apache.hadoop.mapred.FileOutputFormat;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
  * Created by suren on 2/10/14.
  */
 public class WordCount extends Configured implements Tool{
+
+    private static final Logger LOGGER = Logger.getLogger(WordCount.class);
 
     @Override
     public int run(String[] args) throws Exception {
@@ -24,10 +27,19 @@ public class WordCount extends Configured implements Tool{
             return -1;
         }
 
+//        LOGGER.debug("");
+
         Job job = new Job(getConf());
         job.setJarByClass(getClass());
-        org.apache.hadoop.mapreduce.lib.input.FileInputFormat.addInputPath(job, new Path(args[0]));
-        org.apache.hadoop.mapreduce.lib.output.FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        job.setMapperClass(WordCountMapper.class);
+        job.setReducerClass(WordCountReducer.class);
+        job.setPartitionerClass(WordCountPartitioner.class);
+
+        job.setNumReduceTasks(3);
+
+        FileInputFormat.addInputPath(job, new Path(args[0]));
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
         return job.waitForCompletion(true) ? 0 : 1;
 
     }

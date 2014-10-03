@@ -17,3 +17,10 @@ hadoop fs -rm -r hdfs://master1/user/ubuntu/data/wordcount-output
 
 
 hadoop fs -count -q <dir>   # to get disk quota used
+
+
+
+hadoop jar /opt/cloudera/parcels/CDH-5.1.3-1.cdh5.1.3.p0.12/share/doc/hadoop-0.20-mapreduce/examples/hadoop-examples.jar    \
+ teragen <number of 100 byte rows> <output-dir>;
+hadoop jar /opt/cloudera/parcels/CDH-5.1.3-1.cdh5.1.3.p0.12/share/doc/hadoop-0.20-mapreduce/examples/hadoop-examples.jar    \
+ terasort <input dir> <output dir>;
