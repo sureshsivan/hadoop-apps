@@ -36,6 +36,9 @@ public class WordCount extends Configured implements Tool{
         job.setReducerClass(WordCountReducer.class);
         job.setPartitionerClass(WordCountPartitioner.class);
 
+
+
+
         job.setNumReduceTasks(3);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
