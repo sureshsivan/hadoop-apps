@@ -5,6 +5,7 @@ import org.apache.hadoop.mapred.FileInputFormat;
 import org.apache.hadoop.mapred.FileOutputFormat;
 import org.apache.hadoop.mapred.JobClient;
 import org.apache.hadoop.mapred.JobConf;
+import org.apache.hadoop.mapred.tools.MRAdmin;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
@@ -18,13 +19,17 @@ public class WordCount {
 
     public static void main(String [] args) throws IOException, ClassNotFoundException, InterruptedException {
 
+//        MRAdmin
+
         JobConf wordCountJobConf = new JobConf();
 
-//        MultipleInputs.addInputPath(wordCountJobConf, new Path(args[0]), TextInputFormat.class, null);
+        Job wordCountJob = new Job(wordCountJobConf);
+        MultipleInputs.addInputPath(wordCountJob, new Path(args[0]), TextInputFormat.class, null);
 
 
         wordCountJobConf.setJarByClass(WordCount.class);
         wordCountJobConf.setJobName("Simple Word count job");
+//        wordCountJobConf.setInputFormat(TextInputFormat);
 //        wordCountJobConf.setMapperClass(null);
 //        wordCountJobConf.setReducerClass(null);
 //        wordCountJobConf.setPartitionerClass(null);
