@@ -11,5 +11,8 @@
 
     <artifactId>hadoop-wordcount-tool-runner-1</artifactId>
 
+    <build>
+        <finalName>${project.name}</finalName>
+    </build>
 
 </project>
