@@ -157,17 +157,17 @@ COMMENT 'Country Data Master Table'
 LOCATION '/user/ubuntu/data/weather/countries'
     AS
         SELECT
-             substr(weather_txt, 0, 6) as st_code,
-             substr(weather_txt, 7, 5) as wban,
-             substr(weather_txt, 14, 4) as year,
-             substr(weather_txt, 18, 2) as month,
-             substr(weather_txt, 20, 2) as day,
-             substr(weather_txt, 24, 6) as temp,
-             substr(weather_txt, 35, 6) as dew_pt,
-             substr(weather_txt, 46, 6) as sl_pressure,
-             substr(weather_txt, 68, 6) as visibility,
-             substr(weather_txt, 78, 5) as wind_speed,
-             substr(weather_txt, 125, 5) as snow_depth
+             substr(weather_txt, 1, 6) as st_code,
+             substr(weather_txt, 8, 5) as wban,
+             substr(weather_txt, 15, 4) as year,
+             substr(weather_txt, 19, 2) as month,
+             substr(weather_txt, 21, 2) as day,
+             substr(weather_txt, 25, 6) as temp,
+             substr(weather_txt, 36, 6) as dew_pt,
+             substr(weather_txt, 47, 6) as sl_pressure,
+             substr(weather_txt, 69, 6) as visibility,
+             substr(weather_txt, 79, 5) as wind_speed,
+             substr(weather_txt, 126, 5) as snow_depth
          FROM
              weather_countries_raw
          WHERE
