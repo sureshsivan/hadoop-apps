@@ -3,38 +3,71 @@ SHOW TABLES;
 hive -f ./script.hq
 hive -e 'SELECT * FROM dummy'
 
-CREATE EXTERNAL TABLE       \
-    weather_stations        \
-        (                   \
-         st_code STRING,    \
-         wban STRING,       \
-         st_name STRING,    \
-         country STRING,    \
-         fips STRING,       \
-         state STRING,      \
-         cal STRING,        \
-         lat STRING,        \
-         lon STRING,        \
-         elev STRING        \
-        )                   \
-COMMENT 'Weather Station Master Table'                                  \
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ','                           \
-LOCATION 'hdfs://master1'                                               \
-tblproperties ("skip.header.line.count"="1");
 
-LOAD DATA LOCAL INPATH '/public_dataset/weather1/ish-history.csv'       \
-INTO TABLE weather_stations;
+########################################################################################################################
+##   Station Names Table creation
+########################################################################################################################
+SET skip.header.line.count = 1;
+
+CREATE TABLE
+    weather_stations_raw
+        (
+         st_code STRING,
+         wban STRING,
+         st_name STRING,
+         country STRING,
+         fips STRING,
+         state STRING,
+         cal STRING,
+         lat STRING,
+         lon STRING,
+         elev STRING
+        )
+COMMENT 'Weather Station Master Table - Raw Data including Header Row'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','  LINES TERMINATED BY '\n'
+LOCATION '/user/ubuntu/data/weather/staging/stations';
+#TBLPROPERTIES ("skip.header.line.count"="1");
+
+LOAD DATA LOCAL INPATH 'file:///public_dataset/weather1/ish-history.csv'
+INTO TABLE weather_stations_raw;
+
+select st_code, st_name, country, state from weather_stations_raw limit 5;
+select st_code, st_name, country, state from weather_stations_raw where st_code !='"USAF"' limit 5;
+select count(1) from weather_stations_raw where st_code =='"USAF"';
+select count(1) from weather_stations_raw ;
+
+CREATE TABLE
+    weather_stations
+COMMENT 'Weather Station Master Table'
+LOCATION '/user/ubuntu/data/weather/stations'
+    AS
+        SELECT
+             st_code,
+             wban,
+             st_name,
+             country,
+             fips,
+             state,
+             cal,
+             lat,
+             lon,
+             elev
+         FROM
+             weather_stations_raw
+         WHERE
+             st_code !='"USAF"'
+        ;
+
+select count(1) from weather_stations_raw ;
+select count(1) from weather_stations ;
 
 
-CREATE EXTERNAL TABLE    \
-    weather_data \
-        (st_code STRING,
-         year STRING,
-         );  \
-    LOAD DATA LOCAL INPATH './...'  \
-    OVERWRITE INTO TABLE weather_data;
+select st_code, st_name, country, state from weather_stations_raw where st_code !='"USAF"' limit 5;
+select st_code, st_name, country, state from weather_stations where st_code !='"USAF"' limit 5;
 
+DROP TABLE weather_stations_raw;
 
-DROP TABLE weather_data;
+hadoop fs -rm -r hdfs://master1/user/ubuntu/data/weather;
+#######################################################################################
 
 
