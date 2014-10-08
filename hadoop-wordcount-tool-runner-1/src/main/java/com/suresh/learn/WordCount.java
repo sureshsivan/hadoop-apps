@@ -25,17 +25,12 @@ public class WordCount extends Configured implements Tool{
             return -1;
         }
 
-//        LOGGER.debug("");
-
         Job job = new Job(getConf());
         job.setJarByClass(getClass());
 
         job.setMapperClass(WordCountMapper.class);
         job.setReducerClass(WordCountReducer.class);
         job.setPartitionerClass(WordCountPartitioner.class);
-
-
-
 
         job.setNumReduceTasks(3);
 

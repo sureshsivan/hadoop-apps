@@ -41,8 +41,8 @@
             <groupId>org.apache.mrunit</groupId>
             <artifactId>mrunit</artifactId>
             <version>1.0.0</version>
-            <classifier>hadoop1</classifier>
-            <!--<classifier>hadoop2</classifier>-->
+            <!--<classifier>hadoop1</classifier>-->
+            <classifier>hadoop2</classifier>
             <scope>test</scope>
         </dependency>
 
@@ -125,6 +125,7 @@
         <module>hadoop-app-1</module>
         <module>hadoop-wordcount-1</module>
         <module>hadoop-wordcount-tool-runner-1</module>
+        <module>hadoop-fs-access</module>
     </modules>
 
 </project>
