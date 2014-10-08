@@ -46,16 +46,16 @@ COMMENT 'Weather Station Master Table'
 LOCATION '/user/ubuntu/data/weather/stations'
     AS
         SELECT
-             st_code,
-             wban,
-             st_name,
-             country,
-             fips_id,
-             state,
-             cal,
-             lat,
-             lon,
-             elev
+             regexp_replace(st_code, "\"", ""),
+             regexp_replace(wban, "\"", ""),
+             regexp_replace(st_name, "\"", ""),
+             regexp_replace(country, "\"", ""),
+             regexp_replace(fips_id, "\"", ""),
+             regexp_replace(state, "\"", ""),
+             regexp_replace(cal, "\"", ""),
+             regexp_replace(lat, "\"", ""),
+             regexp_replace(lon, "\"", ""),
+             regexp_replace(elev "\"", "")
          FROM
              weather_stations_raw
          WHERE
