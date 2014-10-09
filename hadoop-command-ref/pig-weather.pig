@@ -59,6 +59,30 @@ STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
 ######################################################################################
 # Weather Data
 ######################################################################################
+raw_weather = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/gsod/20*/*'
+                AS (row:chararray);
 
+#raw_weather = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/gsod/{2000,2001,2002}'
+#                AS (row:chararray);
+
+
+weather_filtered = FILTER raw_weather BY (NOT (INDEXOF(row, 'USAF', 0)));
+
+weather_master = FOREACH weather_filtered  GENERATRE
+	      (int)TRIM(SUBSTRING(row, 0, 6)) AS station,
+	      (int)TRIM(SUBSTRING(row, 7,12)) AS wban,
+	      (int)TRIM(SUBSTRING(row, 14, 22)) AS ymd,
+	      (float)TRIM(SUBSTRING(row, 24, 29)) AS temp_avg,
+	      (float)TRIM(SUBSTRING(row, 102, 107)) AS temp_max,
+	      (float)TRIM(SUBSTRING(row, 110, 115)) AS temp_min,
+	      (float)TRIM(SUBSTRING(row, 78, 82)) AS windspeed_avg,
+	      (float)TRIM(SUBSTRING(row, 95, 99)) AS windspeed_max,
+	      (float)TRIM(SUBSTRING(row, 68, 72)) AS visibility,
+	      (float)TRIM(SUBSTRING(row, 118, 122)) AS precipitation;
+
+#to_print = LIMIT weather_master by 10;
+#DUMP to_print;
+
+STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
 
 ######################################################################################
