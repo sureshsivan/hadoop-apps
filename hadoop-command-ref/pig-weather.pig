@@ -86,3 +86,22 @@ weather_master = FOREACH weather_filtered  GENERATRE
 STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
 
 ######################################################################################
+
+
+
+
+######################################################################################
+######################################################################################
+#   PIG Excercises
+######################################################################################
+######################################################################################
+
+countries = LOAD 'hdfs://master1/user/ubuntu/data/prod/weather/countries_master'
+            USING PigStorage('\t')
+            AS (country_id:chararray,
+                country_name:chararray);
+
+ten_countries = LIMIT countries by 10;
+dump ten_countries;
+
+
