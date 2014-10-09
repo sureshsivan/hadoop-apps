@@ -6,13 +6,13 @@ pig;
 raw_countries = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/country-list.txt'
                 AS (row:chararray);
 
-countries_filtered = FILTER raw_stations BY (NOT (INDEXOF(row, 'FIPS ID', 0)));
+countries_filtered = FILTER raw_stations BY (NOT (INDEXOF(row, 'FIPS ID', 0)) != -1);
 
 countries_master = FOREACH countries_filtered  GENERATRE
                     (chararray)TRIM(SUBSTRING(row, 0, 12)) AS country_id,
                     (chararray)TRIM(SUBSTRING(row, 12, 20)) AS country_name;
 
-#to_print = LIMIT countries_master by 10;
+#to_print = LIMIT countries_master 10;
 #DUMP to_print;
 
 STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
@@ -48,7 +48,7 @@ station_master = FOREACH header_filtered  GENERATRE
                     (float) TRIM(REPLACE(lon, "\"", "")) AS longitude,
                     (float) TRIM(REPLACE(elev, "\"", "")) AS elevation;
 
-#to_print = LIMIT station_master by 10;
+#to_print = LIMIT station_master 10;
 #DUMP to_print;
 
 STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
@@ -66,7 +66,7 @@ raw_weather = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/gsod/20*/*'
 #                AS (row:chararray);
 
 
-weather_filtered = FILTER raw_weather BY (NOT (INDEXOF(row, 'USAF', 0)));
+weather_filtered = FILTER raw_weather BY (NOT (INDEXOF(row, 'STN--', 0) != -1));
 
 weather_master = FOREACH weather_filtered  GENERATRE
 	      (int)TRIM(SUBSTRING(row, 0, 6)) AS station,
@@ -80,7 +80,7 @@ weather_master = FOREACH weather_filtered  GENERATRE
 	      (float)TRIM(SUBSTRING(row, 68, 72)) AS visibility,
 	      (float)TRIM(SUBSTRING(row, 118, 122)) AS precipitation;
 
-#to_print = LIMIT weather_master by 10;
+#to_print = LIMIT weather_master 10;
 #DUMP to_print;
 
 STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
