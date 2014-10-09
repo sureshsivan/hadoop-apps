@@ -1,0 +1,13 @@
+CREATE DATABASE IF NOT EXISTS weather
+    COMMENT 'This DB holds data for all Weather Related Data'
+    LOCATION '/user/ubuntu/data/weather.db';
+
+CREATE TABLE IF NOT EXISTS weather.weather_stations_raw(
+        stationid       STRING      COMMENT     'Station Id',
+        stationname     STRING      COMMENT     'Station Name')
+    COMMENT     'Stations Data - Raw Data inclusive of header row'
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY ','  LINES TERMINATED BY '\n'
+    LOCATION    '/user/ubuntu/data/weather.db/staging/stations'
+    TBLPROPERTIES('created_by'='suresh.sivanantham',
+                    'is_raw=true',
+                    'skip.header.line.count'='1')

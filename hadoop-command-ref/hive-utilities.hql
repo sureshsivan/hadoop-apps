@@ -1,0 +1,23 @@
+SHOW DATABASES;
+SHOW DATABASES LIKE '%weather%';
+DESCRIBE DATABASE weather;
+DESCRIBE DATABASE EXTENDED weather;
+
+USE weather;    --  To Set as default DB
+DROP DATABASE IF EXISTS weather;
+DROP DATABASE IF EXISTS weather CASCADE;
+
+ALTER DATABASE weather SET DBPROPERTIES ('edited-by' = 'Suresh Sivanantham');
+
+
+SHOW TABLES;
+SHOW TABLES in weather;
+
+DESCRIBE <SCHEMA_NAME>.<TABLE_NAME>;
+DESCRIBE EXTENDED <SCHEMA_NAME>.<TABLE_NAME>;
+DESCRIBE FORMATTED <SCHEMA_NAME>.<TABLE_NAME>;
+
+
+--Properties
+--==========
+set hive.cli.print.current.db=true;
