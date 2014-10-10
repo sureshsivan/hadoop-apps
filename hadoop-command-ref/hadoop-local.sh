@@ -26,10 +26,6 @@ mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop historyserve
 
 
 
-
-
-
-
 rm -rf /tmp/hadoop-suren/dfs/name/*;
 rm -rf /dev_tools/tools/hadoop/logs/*;
 rm -rf /dev_tools/tools/hadoop/data/dfs.data/*;
@@ -43,3 +39,8 @@ hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.local start datanode;
 yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.local start nodemanager;
 yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.local start resourcemanager;
 mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.local start historyserver;
+
+
+
+hadoop fs -ls "hdfs://localhost/"
+

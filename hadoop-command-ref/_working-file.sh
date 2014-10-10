@@ -1,12 +1,12 @@
-pig;
 REGISTER /dev_tools/pig_default/lib/piggybank.jar
 DEFINE SUBSTRING org.apache.pig.piggybank.evaluation.string.SUBSTRING();
 DEFINE TRIM org.apache.pig.piggybank.evaluation.string.Trim();
 
-######################################################################################
-# Country Data
-######################################################################################
-raw_countries = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/country-list.txt'
+
+hadoop fs -put /dev_tools/tmp/big_data/* "hdfs://localhost/data/weather/"
+hadoop fs -mkdir /dev_tools/tmp/big_data/* "hdfs://localhost/data/weather/cleansed"
+
+raw_countries = LOAD 'hdfs://localhost/data/weather/country-list.txt'
                 AS (row:chararray);
 
 countries_filtered = FILTER raw_countries BY (NOT (INDEXOF(row, 'FIPS ID', 0) != -1));
@@ -15,19 +15,15 @@ countries_master = FOREACH countries_filtered  GENERATE
                     (chararray) TRIM(SUBSTRING(row, 0, 12)) AS country_id,
                     (chararray) TRIM(SUBSTRING(row, 12, 20)) AS country_name;
 
-#to_print = LIMIT countries_master 10;
-#DUMP to_print;
 
-STORE countries_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather/countries_master.tsv';
+to_print = LIMIT countries_master 10;
+DUMP to_print;
 
-######################################################################################
-
+STORE countries_master INTO 'hdfs://localhost/data/weather/cleansed/countries_master.tsv';
 
 
-######################################################################################
-# Stations Data
-######################################################################################
-raw_stations = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/ish-history.csv'
+
+raw_stations = LOAD 'hdfs://localhost/data/weather/ish-history.csv'
                 USING PigStorage(',')
                 AS (usaf:chararray,
                     wban:chararray,
@@ -55,19 +51,23 @@ station_master = FOREACH stations_filtered  GENERATE
 #to_print = LIMIT station_master 10;
 #DUMP to_print;
 
-STORE station_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather/station_master.tsv';
-######################################################################################
+STORE station_master INTO 'hdfs://localhost/data/weather/cleansed/station_master.tsv';
 
 
 
-######################################################################################
-# Weather Data
-######################################################################################
-raw_weather = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/gsod/20*/*'
+
+
+
+
+
+
+
+raw_weather = LOAD 'hdfs://localhost/data/weather/gsod/20*/*'
                 AS (row:chararray);
 
 #raw_weather = LOAD 'hdfs://master1/user/ubuntu/data/staging/weather/gsod/{2000,2001,2002}'
 #                AS (row:chararray);
+
 
 weather_filtered = FILTER raw_weather BY (NOT (INDEXOF(row, 'STN--', 0) != -1));
 
@@ -86,25 +86,7 @@ weather_master = FOREACH weather_filtered  GENERATE
 #to_print = LIMIT weather_master 10;
 #DUMP to_print;
 
-STORE weather_master INTO 'hdfs://master1/user/ubuntu/data/prod/weather';
-
-######################################################################################
+STORE weather_master INTO 'hdfs://localhost/data/weather/cleansed/weather_master.tsv';
 
 
-
-
-######################################################################################
-######################################################################################
-#   PIG Excercises
-######################################################################################
-######################################################################################
-
-countries = LOAD 'hdfs://master1/user/ubuntu/data/prod/weather/countries_master'
-            USING PigStorage('\t')
-            AS (country_id:chararray,
-                country_name:chararray);
-
-ten_countries = LIMIT countries by 10;
-dump ten_countries;
-
-
+hadoop fs -getmerge /reports/some_output /mnt/hdfs/reports/some_output.txt
