@@ -179,6 +179,25 @@ station_country_weather_projected = FOREACH station_country_weather_joined GENER
                                         stations_formatted::elevation;
 weather_data = rank station_country_weather_projected;
 
+STORE weather_data INTO 'hdfs://localhost/data/weather/staging';
+quit;
+
+echo -e 'RECORD_ID\tDATE\tTEMP\tWINDSPD\tVISIB\tPERCIP\tCOUNTRY\tSTATIONNAME\tCOUNTRYCODE\tSTATE\tLATITUDE\tLONGITUDE\tELEVATION' > /tmp/_weather_header;
+hadoop fs -moveFromLocal /tmp/_weather_header hdfs://localhost/data/weather/staging;
+hadoop fs -rm hdfs://localhost/data/weather/staging/_SUCCESS;
+hadoop fs -ls hdfs://localhost/data/weather/staging;
+hadoop fs -getmerge hdfs://localhost/data/weather/staging/* /tmp/weather_data.tsv;
+more /tmp/weather_data.tsv;
+hadoop fs -mkdir hdfs://localhost/data/weather/prod;
+hadoop fs -moveFromLocal /tmp/weather_data.tsv hdfs://localhost/data/weather/prod;
+hadoop fs -cat hdfs://localhost/data/weather/prod/weather_data.tsv | head;
+hadoop fs -rmr hdfs://localhost/data/weather/staging;
+hadoop fs -rmr hdfs://localhost/data/weather/raw;
+hadoop fs -rm hdfs://localhost/data/weather/*.tsv;
+
+
+
+
 
 to_print = LIMIT station_country_joined 50;
 to_print = LIMIT station_country_weather_ranked 500;
