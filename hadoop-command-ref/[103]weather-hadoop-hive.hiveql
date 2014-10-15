@@ -1,0 +1,27 @@
+CREATE DATABASE IF NOT EXISTS weather
+    COMMENT 'This DB holds data for all Weather Related Data'
+    LOCATION 'hdfs://master1/user/ubuntu/hive/data/weather.db';
+
+CREATE EXTERNAL TABLE IF NOT EXISTS weather.200__weather_data(
+        date_ymd        STRING      COMMENT     'Date in YYYYMMDD Format',
+        temp            STRING      COMMENT     'Average Temperature on the day',
+        windspeed       STRING      COMMENT     'Average Windspeed on the day',
+        visibility      STRING      COMMENT     'Average Visibility on the day',
+        precipitation   STRING      COMMENT     'Average Precipitation on the day',
+        country         STRING      COMMENT     'Country',
+        station         STRING      COMMENT     'Station Name',
+        country_code    STRING      COMMENT     '2 DigitCountry Code',
+        state           STRING      COMMENT     'State',
+        latitude        STRING      COMMENT     'Station Co-ordinate Latitude',
+        latitude        STRING      COMMENT     'Station Co-ordinate Longitude',
+        latitude        STRING      COMMENT     'Station Co-ordinate Elevation')
+    COMMENT     'Stations Data for Year 2000 ~ 2009 - Raw Data inclusive of header row'
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n'
+    LOCATION    'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
+    TBLPROPERTIES('created_by'='suresh.sivanantham',
+                    'has_header=true',
+                    'skip.header.line.count'='1');
+
+select * from 200__weather_data LIMIT 10;
+select * from 200__weather_data where country_code = 'IN' LIMIT 10;
+
