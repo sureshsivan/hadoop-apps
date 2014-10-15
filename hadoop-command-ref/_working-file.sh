@@ -220,3 +220,7 @@ hadoop fs -ls hdfs://master1/
 hadoop fs -ls hdfs://master1/user/
 hadoop fs -ls hdfs://master1/user/ubuntu
 
+
+sudo update-alternatives --list hadoop-conf
+sudo update-alternatives --install /etc/hadoop/conf hadoop-conf /home/ubuntu/hadoop_conf/conf.cloudera.hdfs 50
+sudo update-alternatives --config hadoop-conf
