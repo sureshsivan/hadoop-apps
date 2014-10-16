@@ -5,4 +5,4 @@ hdfs dfs -expunge;
 
 hadoop secondarynamenode -checkpoint force;
 hadoop secondarynamenode -checkpoint force;
-hadoop secondarynamenode -geteditsize;
+hdfs secondarynamenode -geteditsize;
