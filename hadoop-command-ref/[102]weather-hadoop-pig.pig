@@ -1,9 +1,17 @@
 sudo find / -name "piggybank.jar";
+## /opt/cloudera/parcels/CDH-5.1.3-1.cdh5.1.3.p0.12/lib/pig/piggybank.jar
 pig;
-REGISTER /dev_tools/pig_default/lib/piggybank.jar;
+REGISTER /opt/cloudera/parcels/CDH-5.1.3-1.cdh5.1.3.p0.12/lib/pig/piggybank.jar;
 DEFINE SUBSTRING org.apache.pig.piggybank.evaluation.string.SUBSTRING();
 DEFINE TRIM org.apache.pig.piggybank.evaluation.string.Trim();
 
+## {http://stackoverflow.com/questions/16499432/pig-local-mode-group-or-join-java-lang-outofmemoryerror-java-heap-space}
+set  mapreduce.task.io.sort.mb 20;
+SET  default_parallel 10;
+set  pig.splitCombination    true;
+set  pig.noSplitCombination    false;
+set  pig.maxCombinedSplitSize    62914560;
+set  mapreduce.job.maps 5;
 raw_countries = LOAD 'hdfs://master1/user/ubuntu/data/weather/raw/country-list.txt' AS (row:chararray);
 countries_headerless = FILTER raw_countries BY (NOT (INDEXOF(row, 'FIPS ID', 0) != -1));
 countries_formatted = FOREACH countries_headerless  GENERATE
@@ -16,9 +24,12 @@ raw_stations = LOAD 'hdfs://master1/user/ubuntu/data/weather/raw/isd-history.csv
                     st_name:chararray,
                     ctry:chararray,
                     state:chararray,
+                        icao:chararray,
                     lat:chararray,
                     lon:chararray,
-                    elev:chararray);
+                    elev:chararray,
+                        begin:chararray,
+                        end:chararray);
 stations_headerless = FILTER raw_stations BY (NOT (INDEXOF(usaf, '"USAF"', 0) != -1));
 stations_formatted = FOREACH stations_headerless  GENERATE
                     (chararray) TRIM(REPLACE(usaf, '"', '')) AS station_id,
@@ -38,7 +49,6 @@ weather_formatted = FOREACH weather_headerless  GENERATE
 	      (float)TRIM(SUBSTRING(row, 78, 82)) AS windspeed_avg,
 	      (float)TRIM(SUBSTRING(row, 68, 72)) AS visibility,
 	      (float)TRIM(SUBSTRING(row, 118, 122)) AS precipitation;
-
 station_country_joined = JOIN countries_formatted by (country_code) , stations_formatted by (country_code);
 station_country_weather_joined = JOIN station_country_joined by (station_id), weather_formatted by (station_id);
 station_country_weather_projected = FOREACH station_country_weather_joined GENERATE
@@ -56,20 +66,24 @@ station_country_weather_projected = FOREACH station_country_weather_joined GENER
                                         stations_formatted::elevation;
 weather_data = rank station_country_weather_projected;
 STORE weather_data INTO 'hdfs://master1/user/ubuntu/data/weather/staging';
+
+
 quit;
 
+hadoop fs -ls 'hdfs://master1/user/ubuntu/data/weather/staging';
+hadoop fs -cat 'hdfs://master1/user/ubuntu/data/weather/staging' | head;
 echo -e 'RECORD_ID\tDATE\tTEMP\tWINDSPD\tVISIB\tPERCIP\tCOUNTRY\tSTATIONNAME\tCOUNTRYCODE\tSTATE\tLATITUDE\tLONGITUDE\tELEVATION' > /tmp/_weather_header;
 hadoop fs -moveFromLocal /tmp/_weather_header hdfs://master1/user/ubuntu/data/weather/staging;
-hadoop fs -rm hdfs://master1/user/ubuntu/data/weather/staging/_SUCCESS;
+hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/staging/_SUCCESS;
 hadoop fs -ls hdfs://master1/user/ubuntu/data/weather/staging;
 hadoop fs -getmerge hdfs://master1/user/ubuntu/data/weather/staging/* /tmp/200__weather_data.tsv;
 more /tmp/200__weather_data.tsv;
 hadoop fs -mkdir hdfs://master1/user/ubuntu/data/weather/prod;
 hadoop fs -moveFromLocal /tmp/200__weather_data.tsv hdfs://master1/user/ubuntu/data/weather/prod;
 hadoop fs -cat hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv | head;
-hadoop fs -rmr hdfs://master1/user/ubuntu/data/weather/staging;
-hadoop fs -rmr hdfs://master1/user/ubuntu/data/weather/raw;
-hadoop fs -rm hdfs://master1/user/ubuntu/data/weather/*.tsv;
+hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/staging;
+hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/raw;
+hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;
 
 ######################################################################################
 
