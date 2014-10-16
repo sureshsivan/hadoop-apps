@@ -76,14 +76,14 @@ echo -e 'RECORD_ID\tDATE\tTEMP\tWINDSPD\tVISIB\tPERCIP\tCOUNTRY\tSTATIONNAME\tCO
 hadoop fs -moveFromLocal /tmp/_weather_header hdfs://master1/user/ubuntu/data/weather/staging;
 hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/staging/_SUCCESS;
 hadoop fs -ls hdfs://master1/user/ubuntu/data/weather/staging;
-hadoop fs -getmerge hdfs://master1/user/ubuntu/data/weather/staging/* /tmp/200__weather_data.tsv;
+hadoop fs -getmerge hdfs://master1/user/ubuntu/data/weather/staging/* /tmp/200__weather_data.tsv;                   #*/
 more /tmp/200__weather_data.tsv;
 hadoop fs -mkdir hdfs://master1/user/ubuntu/data/weather/prod;
 hadoop fs -moveFromLocal /tmp/200__weather_data.tsv hdfs://master1/user/ubuntu/data/weather/prod;
 hadoop fs -cat hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv | head;
 hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/staging;
 hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/raw;
-hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;
+hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;                                             #*/
 
 ######################################################################################
 
@@ -96,7 +96,7 @@ hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;
 ######################################################################################
 ######################################################################################
 set  mapreduce.task.io.sort.mb 20;
-WEATHER_DATA = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
+weather_data = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
                 AS (id:chararray,
                     ymd:chararray,
                     temp_avg:chararray,
@@ -110,9 +110,16 @@ WEATHER_DATA = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_d
                     latitude:chararray,
                     longitude:chararray,
                     elevation:chararray);
-INDIA_WEATHER_DATA = FILTER WEATHER_DATA BY country_code == 'IN';
-INDIA_WEATHER_DATA_LIMIT = LIMIT INDIA_WEATHER_DATA 200;
-DUMP INDIA_WEATHER_DATA_LIMIT;
+weather_filter_by_country = FILTER weather_data BY country_code == 'IN';
+weather_group_by_country = GROUP weather_data BY (country_code);
+weather_max_by_country = FOREACH weather_group_by_country GENERATE
+                            group as country_code,
+                            weather_filter_by_country.country_name as country_name,
+                            MAX(weather_filter_by_country.temp_avg) as max_temp,
+                            MAX(weather_filter_by_country.windspeed_avg) as max_windspeed;
+DUMP weather_max_by_country;
+weather_filter_by_country_limit = LIMIT weather_filter_by_country 200;
+DUMP weather_filter_by_country_limit;
 
 
 
