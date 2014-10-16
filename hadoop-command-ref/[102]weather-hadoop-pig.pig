@@ -95,14 +95,26 @@ hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;
 #   PIG Excercises
 ######################################################################################
 ######################################################################################
+set  mapreduce.task.io.sort.mb 20;
+WEATHER_DATA = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
+                AS (id:chararray,
+                    ymd:chararray,
+                    temp_avg:chararray,
+                    windspeed_avg:chararray,
+                    visibility:chararray,
+                    precipitation:chararray,
+                    country_name:chararray,
+                    st_name:chararray,
+                    country_code:chararray,
+                    state:chararray,
+                    latitude:chararray,
+                    longitude:chararray,
+                    elevation:chararray);
+INDIA_WEATHER_DATA = FILTER WEATHER_DATA BY country_code == 'IN';
+INDIA_WEATHER_DATA_LIMIT = LIMIT INDIA_WEATHER_DATA 200;
+DUMP INDIA_WEATHER_DATA_LIMIT;
 
-countries = LOAD 'hdfs://master1/user/ubuntu/data/prod/weather/countries_master'
-            USING PigStorage('\t')
-            AS (country_id:chararray,
-                country_name:chararray);
 
-ten_countries = LIMIT countries by 10;
-dump ten_countries;
 
 ######################################################################################
 ######################################################################################
