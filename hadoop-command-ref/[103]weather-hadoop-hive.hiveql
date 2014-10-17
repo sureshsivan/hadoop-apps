@@ -1,3 +1,9 @@
+set hive.exec.reducers.bytes.per.reducer=<number>
+set hive.exec.reducers.max=5;
+set mapred.reduce.tasks=5;
+
+
+
 CREATE DATABASE IF NOT EXISTS weather
     COMMENT 'This DB holds data for all Weather Related Data'
     LOCATION '/user/ubuntu/hive/data/weather.db';
@@ -29,4 +35,8 @@ select * from weather.200__weather_data where id != "RECORD_ID" LIMIT 10;
 select * from weather.200__weather_data
                           where id != "RECORD_ID" and
                                 country_code = 'IN' LIMIT 200;
-
+select country, station, max(temp), min(temp) from weather.200__weather_data
+                          where id != "RECORD_ID" and
+                                country_code = 'IN' and
+                                temp != '99.0'
+                          group by country, station;
