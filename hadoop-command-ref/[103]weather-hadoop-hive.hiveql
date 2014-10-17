@@ -1,8 +1,9 @@
 CREATE DATABASE IF NOT EXISTS weather
     COMMENT 'This DB holds data for all Weather Related Data'
-    LOCATION 'hdfs://master1/user/ubuntu/hive/data/weather.db';
-
+    LOCATION '/user/ubuntu/hive/data/weather.db';
+SHOW DATABASES;
 CREATE EXTERNAL TABLE IF NOT EXISTS weather.200__weather_data(
+        id              STRING      COMMENT     'Row ID',
         date_ymd        STRING      COMMENT     'Date in YYYYMMDD Format',
         temp            STRING      COMMENT     'Average Temperature on the day',
         windspeed       STRING      COMMENT     'Average Windspeed on the day',
@@ -13,15 +14,19 @@ CREATE EXTERNAL TABLE IF NOT EXISTS weather.200__weather_data(
         country_code    STRING      COMMENT     '2 DigitCountry Code',
         state           STRING      COMMENT     'State',
         latitude        STRING      COMMENT     'Station Co-ordinate Latitude',
-        latitude        STRING      COMMENT     'Station Co-ordinate Longitude',
-        latitude        STRING      COMMENT     'Station Co-ordinate Elevation')
+        longitude       STRING      COMMENT     'Station Co-ordinate Longitude',
+        elevation       STRING      COMMENT     'Station Co-ordinate Elevation')
     COMMENT     'Stations Data for Year 2000 ~ 2009 - Raw Data inclusive of header row'
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n'
-    LOCATION    'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
+    LOCATION    '/user/ubuntu/data/weather/prod/'
     TBLPROPERTIES('created_by'='suresh.sivanantham',
-                    'has_header=true',
+                    'has_header'='true',
                     'skip.header.line.count'='1');
+SHOW TABLES in weather;
+DROP TABLE weather.200__weather_data;
 
-select * from 200__weather_data LIMIT 10;
-select * from 200__weather_data where country_code = 'IN' LIMIT 10;
+select * from weather.200__weather_data where id != "RECORD_ID" LIMIT 10;
+select * from weather.200__weather_data
+                          where id != "RECORD_ID" and
+                                country_code = 'IN' LIMIT 200;
 

@@ -96,7 +96,7 @@ hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;         
 ######################################################################################
 ######################################################################################
 set  mapreduce.task.io.sort.mb 20;
-weather_data = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
+weather_data_with_header = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv'
                 AS (id:chararray,
                     ymd:chararray,
                     temp_avg:chararray,
@@ -110,18 +110,22 @@ weather_data = LOAD 'hdfs://master1/user/ubuntu/data/weather/prod/200__weather_d
                     latitude:chararray,
                     longitude:chararray,
                     elevation:chararray);
+weather_data = FILTER weather_data_with_header BY (NOT (INDEXOF(id, 'ID', 0) != -1));
 weather_filter_by_country = FILTER weather_data BY country_code == 'IN';
 weather_group_by_country = GROUP weather_data BY (country_code);
 weather_max_by_country = FOREACH weather_group_by_country GENERATE
                             group as country_code,
                             weather_filter_by_country.country_name as country_name,
-                            MAX(weather_filter_by_country.temp_avg) as max_temp,
-                            MAX(weather_filter_by_country.windspeed_avg) as max_windspeed;
+                            MAX((INT) weather_filter_by_country.temp_avg) as max_temp,
+                            MAX((INT) weather_filter_by_country.windspeed_avg) as max_windspeed;
+all_countries = FOREACH weather_data GENERATE  country_name;
+unique_countries = DISTINCT all_countries;
+grouped_countries = GROUP unique_countries ALL;
+DUMP grouped_countries;
+DUMP unique_countries;
 DUMP weather_max_by_country;
 weather_filter_by_country_limit = LIMIT weather_filter_by_country 200;
 DUMP weather_filter_by_country_limit;
-
-
 
 ######################################################################################
 ######################################################################################
