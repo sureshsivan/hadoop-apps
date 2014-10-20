@@ -127,6 +127,7 @@
         <module>hadoop-wordcount-tool-runner-1</module>
         <module>hadoop-fs-access</module>
         <module>hadoop-weather-maxtemp-by-country-station</module>
+        <module>test</module>
     </modules>
 
 </project>
