@@ -2,6 +2,7 @@ package learn;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.StringUtils;
 import org.junit.Test;
@@ -18,6 +19,8 @@ public class Test1 {
     public void testIntegerToHex() throws IOException {
 //        System.out.println(StringUtils.("1"));
         IntWritable i1 = new IntWritable(-2);
+        Text t = new Text();
+        t.set("211");
         IntWritable i2 = new IntWritable(2);
         LongWritable l1 = new LongWritable(1L);
         LongWritable l2 = new LongWritable(2L);
@@ -30,18 +33,21 @@ public class Test1 {
         System.out.println(serialize(l1).length);
         System.out.println(serialize(l2));
         System.out.println(serialize(l2).length);
+        System.out.println(serialize(t));
+        System.out.println(serialize(t).length);
 
 
         System.out.println("#E#############################");
-        for (byte b : serialize(i1)){
+        for (byte b : serialize(t)){
             System.out.println(b);
         }
         System.out.println("#E#############################");
 
-        byte b = 127;
+//        byte b = 127;
 
         System.out.println("#E#############################");
         System.out.println(StringUtils.byteToHexString(serialize(i1)));
+        System.out.println(StringUtils.byteToHexString(serialize(t)));
         System.out.println(StringUtils.byteToHexString(serialize(i2)));
         System.out.println(StringUtils.byteToHexString(serialize(l1)));
         System.out.println(StringUtils.byteToHexString(serialize(l2)));
