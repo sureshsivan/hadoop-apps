@@ -43,7 +43,7 @@ public class Test1 {
         }
         System.out.println("#E#############################");
 
-//        byte b = 127;
+        byte b = 127;
 
         System.out.println("#E#############################");
         System.out.println(StringUtils.byteToHexString(serialize(i1)));
