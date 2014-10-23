@@ -1,0 +1,1 @@
+http://hortonworks.com/blog/hdfs-metadata-directories-explained/
