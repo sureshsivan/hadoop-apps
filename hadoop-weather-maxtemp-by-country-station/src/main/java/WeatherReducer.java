@@ -1,4 +1,3 @@
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -38,6 +37,7 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
     @Override
     protected void reduce(Text key, Iterable<WeatherDataWritable> values, Context context) throws IOException, InterruptedException {
 
+
         minTemp = Float.MIN_VALUE;
         maxTemp = Float.MIN_VALUE;
 
@@ -51,28 +51,28 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
         maxPercipitation = Float.MIN_VALUE;
         
         for(WeatherDataWritable datum : values){
-            if(datum.getTemp().get() != WeatherDataParser.INVALID_TEMP){
+            if(datum.getTemp().get() != WeatherDataParserDriver.INVALID_TEMP){
                 minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();
                 maxTemp = maxTemp > datum.getTemp().get() ? maxTemp : datum.getTemp().get();
             } else {
                 context.getCounter(InvalidData.TEMP_MISSING).increment(1);
             }
 
-            if(datum.getWindspeed().get() != WeatherDataParser.INVALID_WINDSPEED){
+            if(datum.getWindspeed().get() != WeatherDataParserDriver.INVALID_WINDSPEED){
                 minWindspeed = minWindspeed < datum.getWindspeed().get() ? minWindspeed : datum.getWindspeed().get();
                 maxWindSpeed = maxWindSpeed > datum.getWindspeed().get() ? maxWindSpeed : datum.getWindspeed().get();
             } else {
                 context.getCounter(InvalidData.WINDSPEED_MISSING).increment(1);
             }
 
-            if(datum.getVisibility().get() != WeatherDataParser.INVALID_VISIBILITY){
+            if(datum.getVisibility().get() != WeatherDataParserDriver.INVALID_VISIBILITY){
                 minVisibility = minVisibility < datum.getVisibility().get() ? minVisibility : datum.getVisibility().get();
                 maxVisibility = maxVisibility > datum.getVisibility().get() ? maxVisibility : datum.getVisibility().get();
             } else {
                 context.getCounter(InvalidData.VISIBILITY_MISSING).increment(1);
             }
 
-            if(datum.getPercipitation().get() != WeatherDataParser.INVALID_PERCIPITATION){
+            if(datum.getPercipitation().get() != WeatherDataParserDriver.INVALID_PERCIPITATION){
                 minPercipitation = minPercipitation < datum.getPercipitation().get() ? minPercipitation : datum.getPercipitation().get();
                 maxPercipitation = maxPercipitation > datum.getPercipitation().get() ? maxPercipitation : datum.getPercipitation().get();
             } else {

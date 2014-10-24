@@ -224,3 +224,20 @@ hadoop fs -ls hdfs://master1/user/ubuntu
 sudo update-alternatives --list hadoop-conf
 sudo update-alternatives --install /etc/hadoop/conf hadoop-conf /home/ubuntu/hadoop_conf/conf.cloudera.hdfs 50
 sudo update-alternatives --config hadoop-conf
+
+
+
+######################################################################################################
+######################################################################################################
+    ####    24-OCT-2014
+######################################################################################################
+######################################################################################################
+ 1174  2014-10-24 21:12:55 	hadoop jar ./hadoop-weather-maxtemp-by-country-station/target/hadoopMaxTempByCountryStation-1.0-SNAPSHOT.jar WeatherDataParser hdfs://localhost/data/weather/prod/weather_data.tsv
+ 1175  2014-10-24 21:13:47 	hadoop fs -ls -h hdfs://localhost/user/ubuntu/jar-jobs/output/1414165376523
+ 1176  2014-10-24 21:14:09 	hadoop fs -cat hdfs://localhost/user/ubuntu/jar-jobs/output/1414165376523/*
+ 1177  2014-10-24 21:14:55 	clear
+ 1178  2014-10-24 21:14:57 	mvn package
+ 1179  2014-10-24 21:15:33 	clear
+ 1180  2014-10-24 21:15:42 	hadoop jar ./hadoop-weather-maxtemp-by-country-station/target/hadoopMaxTempByCountryStation-1.0-SNAPSHOT.jar WeatherDataParser hdfs://localhost/data/weather/prod/weather_data.tsv
+ 1181  2014-10-24 21:16:34 	hadoop fs -cat hdfs://localhost/user/ubuntu/jar-jobs/output/1414165542635/*
+ 1182  2014-10-24 21:18:07 	history

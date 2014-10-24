@@ -1,8 +1,6 @@
-import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
-import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
 
@@ -37,17 +35,19 @@ public class WeatherMapper extends Mapper<LongWritable, Text, Text, WeatherDataW
         WeatherDataWritable datum = WeatherDataWritable.getWeatherData(value);
 
         //  If all the weather data is wrong - skip that record.
-        if((datum.getTemp().get() == WeatherDataParser.INVALID_TEMP) &&
-                (datum.getWindspeed().get() == WeatherDataParser.INVALID_WINDSPEED) &&
-                (datum.getVisibility().get() == WeatherDataParser.INVALID_VISIBILITY) &&
-                (datum.getPercipitation().get() == WeatherDataParser.INVALID_PERCIPITATION)){
+        if((datum.getTemp().get() == WeatherDataParserDriver.INVALID_TEMP) &&
+                (datum.getWindspeed().get() == WeatherDataParserDriver.INVALID_WINDSPEED) &&
+                (datum.getVisibility().get() == WeatherDataParserDriver.INVALID_VISIBILITY) &&
+                (datum.getPercipitation().get() == WeatherDataParserDriver.INVALID_PERCIPITATION)){
             // Increment Counter for All Wrong Data
             context.getCounter(InvalidData.ALL_MISSING).increment(1);
             return;
         }
 
 
-        context.write(new Text(datum.getCountryName().toString()), datum);
+//        context.write(new Text(datum.getCountryName().toString()), datum);
+//        context.write(new Text(datum.getYear().toString()), datum);
+        context.write(new Text(datum.getCountryCode().toString()), datum);
 
     }
 }
