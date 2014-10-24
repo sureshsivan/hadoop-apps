@@ -39,12 +39,12 @@ public class WeatherDataParser extends Configured implements Tool {
         job.setNumReduceTasks(4);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path("hdfs://master1/user/ubuntu/jar-jobs/output/" + new Date().getTime()));
+        FileOutputFormat.setOutputPath(job, new Path("hdfs://localhost/user/ubuntu/jar-jobs/output/" + new Date().getTime()));
         return job.waitForCompletion(true) ? 0 : 1;
     }
 
     public static void main(String[] args) throws Exception{
-        int exitCode = ToolRunner.run(new MaxTempByCountryStationYearNoPartition(), args);
+        int exitCode = ToolRunner.run(new WeatherDataParser(), args);
         System.exit(exitCode);
     }
 }

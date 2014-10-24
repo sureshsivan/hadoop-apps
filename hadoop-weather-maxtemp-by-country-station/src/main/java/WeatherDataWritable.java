@@ -42,20 +42,20 @@ public class WeatherDataWritable implements Writable {
             switch (i){
                 case 1:             //  First segment in TSV
                     data.setYear(new IntWritable(Integer.parseInt(currentToken.substring(0, 4))));
-                    data.setMonth(new IntWritable(Integer.parseInt(currentToken.substring(4, 2))));
-                    data.setDay(new IntWritable(Integer.parseInt(currentToken.substring(6, 2))));
+                    data.setMonth(new IntWritable(Integer.parseInt(currentToken.substring(4, 6))));
+                    data.setDay(new IntWritable(Integer.parseInt(currentToken.substring(6, 8))));
                     break;
                 case 2:             //  Second Segment in TSV
-                    data.setTemp(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setTemp(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 3:
-                    data.setWindspeed(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setWindspeed(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 4:
-                    data.setVisibility(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setVisibility(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 5:
-                    data.setPercipitation(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setPercipitation(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 6:
                     data.setCountryName(new Text(currentToken));
@@ -70,13 +70,13 @@ public class WeatherDataWritable implements Writable {
                     data.setStateCode(new Text(currentToken));
                     break;
                 case 10:
-                    data.setLatitude(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setLatitude(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 11:
-                    data.setLongitude(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setLongitude(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 case 12:
-                    data.setElevation(new FloatWritable(Integer.parseInt(currentToken)));
+                    data.setElevation(new FloatWritable(Float.parseFloat(currentToken)));
                     break;
                 default:
                     break;
