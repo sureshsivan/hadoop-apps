@@ -7,13 +7,13 @@ import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
 /**
- * Created by suren on 19/10/14.
+ * Created by suren on 24/10/14.
  */
-public class MaxTempByCountryStationYearNoPartition extends Configured implements Tool {
+public class WeatherDataParser extends Configured implements Tool {
 
     public static final float INVALID_TEMP = 99.9F;
     public static final float INVALID_WINDSPEED = 99.9F;
-    public static final float INVALID_ = 99.9F;
+    public static final float INVALID_VISIBILITY = 99.9F;
     public static final float INVALID_PERCIPITATION = 99.9F;
 
 
@@ -29,7 +29,8 @@ public class MaxTempByCountryStationYearNoPartition extends Configured implement
         job.setJarByClass(getClass());
 
         job.setMapperClass(WeatherMapper.class);
-//        job.setReducerClass(WordCountReducer.class);
+        job.setCombinerClass(WeatherReducer.class);
+        job.setReducerClass(WeatherReducer.class);
 //        job.setPartitionerClass(WordCountPartitioner.class);
 
         job.setNumReduceTasks(3);

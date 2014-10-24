@@ -72,15 +72,19 @@ quit;
 
 hadoop fs -ls 'hdfs://master1/user/ubuntu/data/weather/staging';
 hadoop fs -cat 'hdfs://master1/user/ubuntu/data/weather/staging' | head;
+
+/* SKIP BELOW 2 LINES IF HEADER NOT REQUIRED. */
 echo -e 'RECORD_ID\tDATE\tTEMP\tWINDSPD\tVISIB\tPERCIP\tCOUNTRY\tSTATIONNAME\tCOUNTRYCODE\tSTATE\tLATITUDE\tLONGITUDE\tELEVATION' > /tmp/_weather_header;
 hadoop fs -moveFromLocal /tmp/_weather_header hdfs://master1/user/ubuntu/data/weather/staging;
+/* SKIP ABOVE 2 LINES IF HEADER NOT REQUIRED. */
+
 hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/staging/_SUCCESS;
 hadoop fs -ls hdfs://master1/user/ubuntu/data/weather/staging;
-hadoop fs -getmerge hdfs://master1/user/ubuntu/data/weather/staging/* /tmp/200__weather_data.tsv;                   #*/
-more /tmp/200__weather_data.tsv;
+hadoop fs -getmerge hdfs://master1/user/ubuntu/data/weather/staging/* /tmp/200X_weather_data_no_header.tsv;                   #*/
+more /tmp/200X_weather_data_no_header.tsv;
 hadoop fs -mkdir hdfs://master1/user/ubuntu/data/weather/prod;
-hadoop fs -moveFromLocal /tmp/200__weather_data.tsv hdfs://master1/user/ubuntu/data/weather/prod;
-hadoop fs -cat hdfs://master1/user/ubuntu/data/weather/prod/200__weather_data.tsv | head;
+hadoop fs -moveFromLocal /tmp/200X_weather_data_no_header.tsv hdfs://master1/user/ubuntu/data/weather/prod;
+hadoop fs -cat hdfs://master1/user/ubuntu/data/weather/prod/200X_weather_data_no_header.tsv | head;
 hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/staging;
 hadoop fs -rm -r -skipTrash hdfs://master1/user/ubuntu/data/weather/raw;
 hadoop fs -rm -skipTrash hdfs://master1/user/ubuntu/data/weather/*.tsv;                                             #*/

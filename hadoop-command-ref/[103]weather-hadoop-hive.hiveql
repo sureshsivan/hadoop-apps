@@ -38,5 +38,50 @@ select * from weather.200__weather_data
 select country, station, max(temp), min(temp) from weather.200__weather_data
                           where id != "RECORD_ID" and
                                 country_code = 'IN' and
-                                temp != '99.0'
+                                temp != '99.9'
+                          group by country, station;
+
+
+
+
+
+###############################################################################
+set hive.exec.reducers.bytes.per.reducer=<number>
+set hive.exec.reducers.max=5;
+set mapred.reduce.tasks=5;
+
+
+
+CREATE DATABASE IF NOT EXISTS weather
+    COMMENT 'This DB holds data for all Weather Related Data'
+    LOCATION '/user/ubuntu/hive/data/weather.db';
+SHOW DATABASES;
+CREATE EXTERNAL TABLE IF NOT EXISTS weather.200X_weather_data_no_header(
+        id              STRING      COMMENT     'Row ID',
+        date_ymd        STRING      COMMENT     'Date in YYYYMMDD Format',
+        temp            STRING      COMMENT     'Average Temperature on the day',
+        windspeed       STRING      COMMENT     'Average Windspeed on the day',
+        visibility      STRING      COMMENT     'Average Visibility on the day',
+        precipitation   STRING      COMMENT     'Average Precipitation on the day',
+        country         STRING      COMMENT     'Country',
+        station         STRING      COMMENT     'Station Name',
+        country_code    STRING      COMMENT     '2 DigitCountry Code',
+        state           STRING      COMMENT     'State',
+        latitude        STRING      COMMENT     'Station Co-ordinate Latitude',
+        longitude       STRING      COMMENT     'Station Co-ordinate Longitude',
+        elevation       STRING      COMMENT     'Station Co-ordinate Elevation')
+    COMMENT     'Stations Data for Year 2000 ~ 2009 - Raw Data inclusive of header row'
+    ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n'
+    LOCATION    '/user/ubuntu/data/weather/prod/'
+    TBLPROPERTIES('created_by'='suresh.sivanantham',
+                    'has_header'='false');
+SHOW TABLES in weather;
+DROP TABLE weather.200X_weather_data_no_header;
+
+select * from weather.200X_weather_data_no_header LIMIT 10;
+select * from weather.200X_weather_data_no_header
+                          where country_code = 'IN' LIMIT 200;
+select country, station, max(temp), min(temp) from weather.200X_weather_data_no_header
+                          where country_code = 'IN' and
+                                temp != '99.9'
                           group by country, station;
