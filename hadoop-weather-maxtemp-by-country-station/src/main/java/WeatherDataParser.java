@@ -6,6 +6,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
+import java.util.Date;
+
 /**
  * Created by suren on 24/10/14.
  */
@@ -19,7 +21,7 @@ public class WeatherDataParser extends Configured implements Tool {
 
     @Override
     public int run(String[] args) throws Exception {
-        if (args.length != 2) {
+        if (args.length < 1) {
             System.err.printf("Usage: %s [generic options] <input> <output>\n", getClass().getSimpleName());
             ToolRunner.printGenericCommandUsage(System.err);
             return -1;
@@ -32,11 +34,12 @@ public class WeatherDataParser extends Configured implements Tool {
         job.setCombinerClass(WeatherReducer.class);
         job.setReducerClass(WeatherReducer.class);
 //        job.setPartitionerClass(WordCountPartitioner.class);
+        job.setJobName("Weather Data Parser");
 
-        job.setNumReduceTasks(3);
+        job.setNumReduceTasks(4);
 
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+        FileOutputFormat.setOutputPath(job, new Path("hdfs://master1/user/ubuntu/jar-jobs/output/" + new Date().getTime()));
         return job.waitForCompletion(true) ? 0 : 1;
     }
 

@@ -27,6 +27,13 @@ public class WeatherMapper extends Mapper<LongWritable, Text, Text, WeatherDataW
 
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+
+        //  Skip If it is a header Record.
+        if(value.toString().startsWith("RECORD_ID")){
+            context.getCounter(InvalidData.HEADER_RECORD).increment(1);
+            return;
+        }
+
         WeatherDataWritable datum = WeatherDataWritable.getWeatherData(value);
 
         //  If all the weather data is wrong - skip that record.
@@ -39,7 +46,8 @@ public class WeatherMapper extends Mapper<LongWritable, Text, Text, WeatherDataW
             return;
         }
 
-        context.write(new Text(datum.getYear().toString()), datum);
+
+        context.write(new Text(datum.getCountryName().toString()), datum);
 
     }
 }

@@ -38,6 +38,18 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
     @Override
     protected void reduce(Text key, Iterable<WeatherDataWritable> values, Context context) throws IOException, InterruptedException {
 
+        minTemp = Float.MIN_VALUE;
+        maxTemp = Float.MIN_VALUE;
+
+        minWindspeed = Float.MIN_VALUE;
+        maxWindSpeed = Float.MIN_VALUE;
+
+        minVisibility = Float.MIN_VALUE;
+        maxVisibility = Float.MIN_VALUE;
+
+        minPercipitation = Float.MIN_VALUE;
+        maxPercipitation = Float.MIN_VALUE;
+        
         for(WeatherDataWritable datum : values){
             if(datum.getTemp().get() != WeatherDataParser.INVALID_TEMP){
                 minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();
@@ -69,7 +81,38 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
 
         }
 
+        context.write(key, getOutputText());
+
 
 
     }
+    
+    public Text getOutputText(){
+        Text out = new Text();
+        StringBuffer sb = new StringBuffer();
+        sb.append("MIN TEMP:" + minTemp);
+        sb.append("  \t  ");
+        sb.append("MAX TEMP:" + maxTemp);
+        sb.append("  \t  ");
+
+        sb.append("MIN WINDSPEED:" + minWindspeed);
+        sb.append("  \t  ");
+        sb.append("MAX WINDSPEED:" + maxWindSpeed);
+        sb.append("  \t  ");
+
+        sb.append("MIN VISIBILITY:" + minVisibility);
+        sb.append("  \t  ");
+        sb.append("MAX VISIBILITY:" + maxVisibility);
+        sb.append("  \t  ");
+
+        sb.append("MIN PERCIPITATION:" + minPercipitation);
+        sb.append("  \t  ");
+        sb.append("MAX PERCIPITATION:" + maxPercipitation);
+        sb.append("  \t  ");
+
+        out.set(sb.toString());
+
+        return out;
+    }
+    
 }

@@ -29,7 +29,7 @@ CREATE EXTERNAL TABLE IF NOT EXISTS weather.200__weather_data(
                     'has_header'='true',
                     'skip.header.line.count'='1');
 SHOW TABLES in weather;
-DROP TABLE weather.200__weather_data;
+
 
 select * from weather.200__weather_data where id != "RECORD_ID" LIMIT 10;
 select * from weather.200__weather_data
@@ -42,7 +42,7 @@ select country, station, max(temp), min(temp) from weather.200__weather_data
                           group by country, station;
 
 
-
+--##DROP TABLE weather.200__weather_data;
 
 
 ###############################################################################
@@ -70,18 +70,32 @@ CREATE EXTERNAL TABLE IF NOT EXISTS weather.200X_weather_data_no_header(
         latitude        STRING      COMMENT     'Station Co-ordinate Latitude',
         longitude       STRING      COMMENT     'Station Co-ordinate Longitude',
         elevation       STRING      COMMENT     'Station Co-ordinate Elevation')
-    COMMENT     'Stations Data for Year 2000 ~ 2009 - Raw Data inclusive of header row'
+    COMMENT     'Stations Data for Year 2000 ~ 2009 - No header row'
     ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'  LINES TERMINATED BY '\n'
     LOCATION    '/user/ubuntu/data/weather/prod/'
     TBLPROPERTIES('created_by'='suresh.sivanantham',
                     'has_header'='false');
 SHOW TABLES in weather;
-DROP TABLE weather.200X_weather_data_no_header;
+
 
 select * from weather.200X_weather_data_no_header LIMIT 10;
 select * from weather.200X_weather_data_no_header
                           where country_code = 'IN' LIMIT 200;
-select country, station, max(temp), min(temp) from weather.200X_weather_data_no_header
+select count(*) from weather.200X_weather_data_no_header;
+select country, station, count(station) from weather.200X_weather_data_no_header
+                          group by country, station
+                          order by country, station;
+select country, count(country) from weather.200X_weather_data_no_header
+                          group by country
+                          order by country;
+select country, count(country) AS DATA_COUNT from weather.200X_weather_data_no_header
+                          group by country
+                          order by DATA_COUNT;
+select country, count(*) from weather.200X_weather_data_no_header
+                          group by country;
+select country, station, count(country) max(temp), min(temp) from weather.200X_weather_data_no_header
                           where country_code = 'IN' and
                                 temp != '99.9'
                           group by country, station;
+
+--##DROP TABLE weather.200X_weather_data_no_header;
