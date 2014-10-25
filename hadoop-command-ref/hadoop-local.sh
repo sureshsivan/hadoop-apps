@@ -41,6 +41,7 @@ function stophadoop(){
         yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop resourcemanager;
         mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop historyserver;
 }
+
 function startzoo(){
         zkServer.sh start;
 }
@@ -49,6 +50,8 @@ function stopzoo(){
 }
 function starthbase(){
         start-hbase.sh;
+        local-master-backup.sh  start   2;
+        local-regionservers.sh start    3       4       5;
 }
 function stophbase(){
         stop-hbase.sh;
@@ -64,6 +67,7 @@ function stoph(){
         stopzoo;
         stophbase;
 }
+
 
 
 
