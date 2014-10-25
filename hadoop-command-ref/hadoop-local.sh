@@ -24,6 +24,48 @@ yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop resourcemanager;
 mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop historyserver;
 
 
+# Aliases created in ~/.bashrc file
+function starthadoop(){
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start namenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start secondarynamenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start datanode;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start nodemanager;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start resourcemanager;
+        mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start historyserver;
+}
+function stophadoop(){
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop namenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop secondarynamenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop datanode;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop nodemanager;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop resourcemanager;
+        mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop historyserver;
+}
+function startzoo(){
+        zkServer.sh start;
+}
+function stopzoo(){
+        zkServer.sh stop;
+}
+function starthbase(){
+        start-hbase.sh;
+}
+function stophbase(){
+        stop-hbase.sh;
+}
+
+function starth(){
+        starthadoop;
+        startzoo;
+        starthbase;
+}
+function stoph(){
+        stophadoop;
+        stopzoo;
+        stophbase;
+}
+
+
 
 
 rm -rf /tmp/hadoop-suren/dfs/name/*;
