@@ -1,7 +1,10 @@
+package learn;
+
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Partitioner;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -14,12 +17,7 @@ import java.util.Date;
 /**
  * Created by suren on 24/10/14.
  */
-public class WeatherDataParserDriver extends Configured implements Tool {
-
-    public static final float INVALID_TEMP = 99.9F;
-    public static final float INVALID_WINDSPEED = 99.9F;
-    public static final float INVALID_VISIBILITY = 99.9F;
-    public static final float INVALID_PERCIPITATION = 99.9F;
+public class WeatherDataParserPartitionerDriver extends Configured implements Tool {
 
 
     @Override
@@ -45,23 +43,43 @@ public class WeatherDataParserDriver extends Configured implements Tool {
         long time = new Date().getTime();
 
         job.setMapperClass(WeatherMapper.class);
-        job.setCombinerClass(WeatherReducer.class);
+//        job.setCombinerClass(WeatherReducer.class);
         job.setReducerClass(WeatherReducer.class);
-//        job.setPartitionerClass(WordCountPartitioner.class);
-        job.setJobName("Weather Data Parser");
+        job.setPartitionerClass(getPartitioner(getConf().get("app.part", "YEAR")));
+        job.setJobName("Weather Data Parser With Partitioner");
 
-//        job.setNumReduceTasks(4);
+        job.setNumReduceTasks(10);
 
+        String outputPath = "hdfs://localhost/user/ubuntu/jar-jobs/output/" + time;
+        boolean jobCompletion = false;
         FileInputFormat.addInputPath(job, new Path(args[0]));
-        FileOutputFormat.setOutputPath(job, new Path("hdfs://master1/user/ubuntu/jar-jobs/output/" + time));
+        FileOutputFormat.setOutputPath(job, new Path(outputPath));
+        jobCompletion = job.waitForCompletion(true);
         System.out.println("#################################################");
-        System.out.println("PATH :" + "hdfs://master1/user/ubuntu/jar-jobs/output/" + time);
         System.out.println("#################################################");
-        return job.waitForCompletion(true) ? 0 : 1;
+        System.out.println("PATH : " + "hdfs://localhost/user/ubuntu/jar-jobs/output/" + time);
+        System.out.println("#################################################");
+        System.out.println("#################################################");
+        return jobCompletion ? 0 : 1;
     }
 
     public static void main(String[] args) throws Exception{
-        int exitCode = ToolRunner.run(new WeatherDataParserDriver(), args);
+        int exitCode = ToolRunner.run(new WeatherDataParserPartitionerDriver(), args);
         System.exit(exitCode);
     }
+
+    public Class<? extends Partitioner> getPartitioner(String partKey){
+        Class<? extends Partitioner> part = null;
+        if(partKey.equals("YEAR")){
+            part = YearPartitioner.class;
+        } else if(partKey.equals("COUNTRY")){
+            part = CountryPartitioner.class;
+        } else if(partKey.equals("COUNTRY_STATION")){
+            part = CountryStationPartitioner.class;
+        } else {
+            part = YearPartitioner.class;
+        }
+        return part;
+    }
+
 }

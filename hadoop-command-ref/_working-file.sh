@@ -241,3 +241,6 @@ sudo update-alternatives --config hadoop-conf
  1180  2014-10-24 21:15:42 	hadoop jar ./hadoop-weather-maxtemp-by-country-station/target/hadoopMaxTempByCountryStation-1.0-SNAPSHOT.jar WeatherDataParser hdfs://localhost/data/weather/prod/weather_data.tsv
  1181  2014-10-24 21:16:34 	hadoop fs -cat hdfs://localhost/user/ubuntu/jar-jobs/output/1414165542635/*
  1182  2014-10-24 21:18:07 	history
+
+
+hadoop jar ./hadoop-weather-maxtemp-by-country-station/target/hadoopMaxTempByCountryStation-1.0-SNAPSHOT.jar learn.WeatherDataParserPartitionerDriver hdfs://localhost/data/weather/prod/weather_data.tsv

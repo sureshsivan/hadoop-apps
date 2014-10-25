@@ -1,3 +1,5 @@
+package learn;
+
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
@@ -6,7 +8,6 @@ import org.apache.hadoop.io.Writable;
 import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
-import java.util.StringTokenizer;
 
 /**
  * Created by suren on 24/10/14.
@@ -292,7 +293,7 @@ public class WeatherDataWritable implements Writable {
 
     @Override
     public String toString() {
-        return "WeatherDataWritable{" +
+        return "learn.WeatherDataWritable{" +
                 "year=" + year +
                 ", month=" + month +
                 ", day=" + day +
