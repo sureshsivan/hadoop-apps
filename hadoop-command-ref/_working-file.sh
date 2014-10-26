@@ -358,4 +358,6 @@ hbase shell
 create 'weather_sample_1', 'weather_data', 'loc_data'
 
 
-hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:station_code,loc_data:state,loc_data:latitude,loc_data:longitudeloc_data:elevation weather_sample_1 hdfs://localhost/data/weather/prod/weather_data.tsv;
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.skip.bad.lines=false -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:country_code,loc_data:state,loc_data:latitude,loc_data:longitude,loc_data:elevation weather_sample_1 hdfs://localhost/data/weather/prod/weather_data.tsv;
+
+
