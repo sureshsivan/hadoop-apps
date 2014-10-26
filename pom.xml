@@ -150,13 +150,50 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--<dependency>-->
+            <!--<groupId>org.apache.sqoop</groupId>-->
+            <!--<artifactId>sqoop</artifactId>-->
+            <!--<version>1.4.4-cdh5.1.3</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+
+
         <dependency>
             <groupId>org.apache.sqoop</groupId>
-            <artifactId>sqoop</artifactId>
-            <version>1.4.4-cdh5.1.3</version>
+            <artifactId>connector-sdk</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
             <scope>provided</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-client</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-common</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-core</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-shell</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.sqoop</groupId>
+            <artifactId>sqoop-tools</artifactId>
+            <version>1.99.3-cdh5.1.3</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 
@@ -174,6 +211,7 @@
         <module>hadoop-fs-access</module>
         <module>hadoop-weather-maxtemp-by-country-station</module>
         <module>test</module>
+        <module>hadoopWeatherHbaseDataLoad</module>
     </modules>
 
 </project>
