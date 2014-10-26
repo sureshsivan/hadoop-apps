@@ -308,12 +308,13 @@ create 'weather_sample', 'weather_data', 'loc_data'
 list
 exit
 
-export PIG_CLASSPATH=/dev_tools/hbase_default/lib/hbase-server-0.98.4-hadoop2.jar:/dev_tools/pig_default/lib/zookeeper-3.4.5.jar
+export PIG_CLASSPATH=/dev_tools/hbase_default/lib/hbase-server-0.98.4-hadoop2.jar:/dev_tools/pig_default/lib/zookeeper-3.4.5.jar:/dev_tools/hbase_default/lib/hbase-client-0.98.4-hadoop2.jar;
+export PIG_CLASSPATH=hbase-hadoop2-compat-0.98.4-hadoop2.jar:/dev_tools/pig_default/lib/zookeeper-3.4.5.jar;
 
 pig;
 
 set debug on;
-set  mapreduce.task.io.sort.mb 20;
+set mapreduce.task.io.sort.mb 20;
 weather_data_with_header = LOAD 'hdfs://localhost/data/weather/prod/weather_data.tsv'
                 AS (id:chararray,
                     ymd:chararray,
@@ -328,7 +329,7 @@ weather_data_with_header = LOAD 'hdfs://localhost/data/weather/prod/weather_data
                     latitude:chararray,
                     longitude:chararray,
                     elevation:chararray);
-weather_data = FILTER weather_data_with_header BY (NOT (INDEXOF(id, 'ID', 0) != -1));
+
 STORE weather_data_with_header INTO 'hbase://weather_sample'
     USING org.apache.pig.backend.hadoop.hbase.HBaseStorage(
         'weather_data:dateymd,
@@ -346,6 +347,15 @@ STORE weather_data_with_header INTO 'hbase://weather_sample'
 
     );
 
+weather_data = FILTER weather_data_with_header BY (NOT (INDEXOF(id, 'ID', 0) != -1));
+
 hbase shell
 scan 'weather_sample'
 
+
+
+hbase shell
+create 'weather_sample_1', 'weather_data', 'loc_data'
+
+
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:station_code,loc_data:state,loc_data:latitude,loc_data:longitudeloc_data:elevation weather_sample_1 hdfs://localhost/data/weather/prod/weather_data.tsv;
