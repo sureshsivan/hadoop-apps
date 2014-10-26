@@ -244,3 +244,109 @@ sudo update-alternatives --config hadoop-conf
 
 
 hadoop jar ./hadoop-weather-maxtemp-by-country-station/target/hadoopMaxTempByCountryStation-1.0-SNAPSHOT.jar learn.WeatherDataParserPartitionerDriver hdfs://localhost/data/weather/prod/weather_data.tsv
+
+
+
+######################################################################################################
+######################################################################################################
+    ####    25-OCT-2014
+######################################################################################################
+######################################################################################################
+# Aliases created in ~/.bashrc file
+function starthadoop(){
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start namenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start secondarynamenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start datanode;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start nodemanager;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start resourcemanager;
+        mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo start historyserver;
+}
+function stophadoop(){
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop namenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop secondarynamenode;
+        hadoop-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop datanode;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop nodemanager;
+        yarn-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop resourcemanager;
+        mr-jobhistory-daemon.sh --config $HADOOP_CONF_ROOT/conf.pseudo stop historyserver;
+}
+
+function startzoo(){
+        zkServer.sh start;
+}
+function stopzoo(){
+        zkServer.sh stop;
+}
+function starthbase(){
+        start-hbase.sh;
+        local-master-backup.sh  start   2;
+        local-regionservers.sh start    3       4       5;
+}
+function stophbase(){
+        stop-hbase.sh;
+}
+
+function starth(){
+        starthadoop;
+        startzoo;
+        starthbase;
+}
+function stoph(){
+        stophadoop;
+        stopzoo;
+        stophbase;
+}
+
+
+
+######################################################################################################
+######################################################################################################
+    ####    26-OCT-2014
+######################################################################################################
+######################################################################################################
+hbase shell
+create 'weather_sample', 'weather_data', 'loc_data'
+list
+exit
+
+pig;
+REGISTER /dev_tools/hbase_default/lib/hbase-server-0.98.4-hadoop2.jar;
+REGISTER /dev_tools/pig_default/lib/hbase-0.94.1.jar;
+REGISTER /dev_tools/pig_default/lib/zookeeper-3.4.5.jar;
+
+set debug on;
+set  mapreduce.task.io.sort.mb 20;
+weather_data_with_header = LOAD 'hdfs://localhost/data/weather/prod/weather_data.tsv'
+                AS (id:chararray,
+                    ymd:chararray,
+                    temp_avg:chararray,
+                    windspeed_avg:chararray,
+                    visibility:chararray,
+                    precipitation:chararray,
+                    country_name:chararray,
+                    st_name:chararray,
+                    country_code:chararray,
+                    state:chararray,
+                    latitude:chararray,
+                    longitude:chararray,
+                    elevation:chararray);
+weather_data = FILTER weather_data_with_header BY (NOT (INDEXOF(id, 'ID', 0) != -1));
+STORE weather_data_with_header INTO 'hbase://weather_sample'
+    USING org.apache.pig.backend.hadoop.hbase.HBaseStorage(
+        'weather_data:dateymd,
+         weather_data:temp,
+         weather_data:windspeed,
+         weather_data:visibility,
+         weather_data:percipitation,
+         loc_data:country,
+         loc_data:station,
+         loc_data:station_code,
+         loc_data:state,
+         loc_data:latitude,
+         loc_data:longitude
+         loc_data:elevation'
+
+    );
+
+hbase shell
+scan 'weather_sample'
+
