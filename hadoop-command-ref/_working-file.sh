@@ -308,10 +308,9 @@ create 'weather_sample', 'weather_data', 'loc_data'
 list
 exit
 
+export PIG_CLASSPATH=/dev_tools/hbase_default/lib/hbase-server-0.98.4-hadoop2.jar:/dev_tools/pig_default/lib/zookeeper-3.4.5.jar
+
 pig;
-REGISTER /dev_tools/hbase_default/lib/hbase-server-0.98.4-hadoop2.jar;
-REGISTER /dev_tools/pig_default/lib/hbase-0.94.1.jar;
-REGISTER /dev_tools/pig_default/lib/zookeeper-3.4.5.jar;
 
 set debug on;
 set  mapreduce.task.io.sort.mb 20;
