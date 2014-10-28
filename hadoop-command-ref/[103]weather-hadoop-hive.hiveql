@@ -108,8 +108,15 @@ select country, station, count(country) max(temp), min(temp) from weather.200X_w
 #Create small weather file for testing
 ######################################################################################
 ######################################################################################
-hive -e select * from weather.200X_weather_data_no_header LIMIT 20000 > /tmp/200X_weather_data_subset.tsv;
-hadoop fs - moveFromLocal /tmp/200X_weather_data_subset.tsv hdfs://master1/user/ubuntu/data/weather/prod/
+hadoop fs -ls -h hdfs://master1/user/ubuntu/data/weather/prod/
+hive -e 'show tables in weather';
+hive -e 'select * from weather.200X_weather_data_no_header LIMIT 20000' > /tmp/200X_weather_data_subset_headerless.tsv;
+hive -e 'select * from weather.200__weather_data LIMIT 20000' > /tmp/200X_weather_data_subset_with_header.tsv;
+more /tmp/200X_weather_data_subset_headerless.tsv
+more /tmp/200X_weather_data_subset_with_header.tsv
+hadoop fs -moveFromLocal /tmp/200X_weather_data_subset_headerless.tsv hdfs://master1/user/ubuntu/data/weather/prod/;
+hadoop fs -moveFromLocal /tmp/200X_weather_data_subset_with_header.tsv hdfs://master1/user/ubuntu/data/weather/prod/;
+
 
 ######################################################################################
 ######################################################################################
