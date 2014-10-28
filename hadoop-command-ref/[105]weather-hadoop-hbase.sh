@@ -37,5 +37,5 @@
 
 hbase shell
 create 'weather_sample_1', 'weather_data', 'loc_data'
-hdfs://master1/user/ubuntu/data/weather/prod/200X_weather_data_subset.tsv
-hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.skip.bad.lines=false -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:country_code,loc_data:state,loc_data:latitude,loc_data:longitude,loc_data:elevation weather_sample_1 hdfs://master1/user/ubuntu/data/weather/prod/200X_weather_data_subset.tsv;
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.skip.bad.lines=false -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:country_code,loc_data:state,loc_data:latitude,loc_data:longitude,loc_data:elevation weather_sample_1 hdfs://master1/user/ubuntu/data/weather/prod/200X_weather_data_subset_headerless.tsv;
+hbase org.apache.hadoop.hbase.mapreduce.ImportTsv -Dimporttsv.skip.bad.lines=false -Dimporttsv.columns=HBASE_ROW_KEY,weather_data:dateymd,weather_data:temp,weather_data:windspeed,weather_data:visibility,weather_data:percipitation,loc_data:country,loc_data:station,loc_data:country_code,loc_data:state,loc_data:latitude,loc_data:longitude,loc_data:elevation weather_sample_1 hdfs:///user/ubuntu/data/weather/prod/200X_weather_data_subset_headerless.tsv;

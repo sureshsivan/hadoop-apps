@@ -243,6 +243,7 @@
         <module>hadoop-weather-maxtemp-by-country-station</module>
         <module>test</module>
         <module>hadoop-weather-hbase-dataload</module>
+        <module>hadoop-weather-max-temp-spark</module>
     </modules>
 
 </project>
