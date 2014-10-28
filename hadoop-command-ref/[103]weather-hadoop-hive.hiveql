@@ -99,3 +99,17 @@ select country, station, count(country) max(temp), min(temp) from weather.200X_w
                           group by country, station;
 
 --##DROP TABLE weather.200X_weather_data_no_header;
+
+
+
+
+######################################################################################
+######################################################################################
+#Create small weather file for testing
+######################################################################################
+######################################################################################
+hive -e select * from weather.200X_weather_data_no_header LIMIT 20000 > /tmp/200X_weather_data_subset.tsv;
+hadoop fs - moveFromLocal /tmp/200X_weather_data_subset.tsv hdfs://master1/user/ubuntu/data/weather/prod/
+
+######################################################################################
+######################################################################################
