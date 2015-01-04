@@ -244,6 +244,7 @@
         <module>test</module>
         <module>hadoop-weather-hbase-dataload</module>
         <module>hadoop-weather-max-temp-spark</module>
+        <module>hadoop-spark</module>
     </modules>
 
 </project>

@@ -15,7 +15,7 @@ public class WordCountPartitioner extends Partitioner<Text, IntWritable> {
     public int getPartition(Text key, IntWritable val, int numPartitions) {
 
         char[] weight1 = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'};
-        char[] weight2 = {'k', 'k', 'm', 'n', 'o', 'q', 'r', 's', 't', 'u'};
+        char[] weight2 = {'k', 'l', 'm', 'n', 'o', 'q', 'r', 's', 't', 'u'};
 
         if(Arrays.asList(weight1).contains(key.toString().charAt(0))){
             return 0;
