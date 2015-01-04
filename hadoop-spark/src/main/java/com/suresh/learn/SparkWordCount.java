@@ -1,5 +1,6 @@
 package com.suresh.learn;
 
+import com.google.common.hash.HashFunction;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
@@ -17,9 +18,12 @@ import java.util.Arrays;
 public class SparkWordCount {
 
     public static void main(String[] args) {
-        SparkConf sparkConf = new SparkConf().setMaster("local").setAppName("Word Count");
+        SparkConf sparkConf = new SparkConf().setMaster("local[3]").setAppName("Word Count");
+        System.out.println("#######################################");
+        System.out.println(sparkConf.toDebugString());
+        System.out.println("#######################################");
         JavaSparkContext sc = new JavaSparkContext(sparkConf);
-
+//        HashFunction
 
         /**
          *
@@ -30,9 +34,9 @@ public class SparkWordCount {
          *
          *
          */
-        String inputFilePath = "/tmp/testfile.txt";
+        String inputFilePath = "file:///tmp/testfile.txt";
 
-        String outputFilePath = "/tmp/testfile.output.txt";
+        String outputFilePath = "file:///tmp/testfile.output";
 
         /**
          * [
@@ -62,6 +66,7 @@ public class SparkWordCount {
         JavaRDD<String> words = lines.flatMap(new FlatMapFunction<String, String>() {
             @Override
             public Iterable<String> call(String s) throws Exception {
+                System.out.println("#### LINES : " + s);
                 return Arrays.asList(s.split(" "));
             }
         });
@@ -78,9 +83,10 @@ public class SparkWordCount {
          * ]
          *
          */
-        JavaPairRDD<String, Integer> mapperOutput = words.mapToPair(new PairFunction<String, String, Integer>() {
+        JavaPairRDD<String, Integer> wcMapperOutput = words.mapToPair(new PairFunction<String, String, Integer>() {
             @Override
             public Tuple2<String, Integer> call(String s) throws Exception {
+                System.out.println("#### WORDS : " + s);
                 return new Tuple2<String, Integer>(s, 1);
 //                return new Tuple2<String, Integer>(s.toLowerCase(), 1);
             }
@@ -95,15 +101,15 @@ public class SparkWordCount {
          * ]
          *
          */
-        JavaPairRDD<String, Integer> reducerOutput = mapperOutput.reduceByKey(new Function2<Integer, Integer, Integer>() {
+        JavaPairRDD<String, Integer> wcReducerOutput = wcMapperOutput.reduceByKey(new Function2<Integer, Integer, Integer>() {
             @Override
             public Integer call(Integer v1, Integer v2) throws Exception {
                 return v1+v2;
             }
         });
 
-        reducerOutput.saveAsTextFile(outputFilePath);
-
+        wcReducerOutput.saveAsTextFile(outputFilePath);
+        sc.stop();
 
     }
 
