@@ -49,7 +49,7 @@ public class SparkWordCount {
          *
          */
         JavaRDD<String> lines = sc.textFile(inputFilePath);
-
+        lines.saveAsTextFile(outputFilePath+ "/lines");
 
         /**
          * [
@@ -70,7 +70,7 @@ public class SparkWordCount {
                 return Arrays.asList(s.split(" "));
             }
         });
-
+        words.saveAsTextFile(outputFilePath+ "/words");
         /**
          * [
          * {Hi, 1}         ,
@@ -91,6 +91,7 @@ public class SparkWordCount {
 //                return new Tuple2<String, Integer>(s.toLowerCase(), 1);
             }
         });
+        wcMapperOutput.saveAsTextFile(outputFilePath+ "/wcMapperOutput");
 
         /**
          * [
@@ -107,7 +108,7 @@ public class SparkWordCount {
                 return v1+v2;
             }
         });
-
+        wcReducerOutput.saveAsTextFile(outputFilePath+ "/wcReducerOutput");
         wcReducerOutput.saveAsTextFile(outputFilePath);
         sc.stop();
 
