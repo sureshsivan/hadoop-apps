@@ -1,18 +1,13 @@
 package learn.domain;
 
-import org.apache.hadoop.io.FloatWritable;
-import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.Text;
-import org.apache.hadoop.io.Writable;
-
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
+import learn.parser.Parseble;
+import learn.parser.Parser;
+import learn.parser.spi.WeatherData1Parser;
 
 /**
  * Created by suren on 24/10/14.
  */
-public class WeatherData1 {
+public class WeatherData1 implements Parseble {
 
     private int year;
     private int month;
@@ -139,5 +134,10 @@ public class WeatherData1 {
 
     public void setElevation(float elevation) {
         this.elevation = elevation;
+    }
+
+    @Override
+    public Parser<WeatherData1> getParser() {
+        return new WeatherData1Parser<WeatherData1>();
     }
 }

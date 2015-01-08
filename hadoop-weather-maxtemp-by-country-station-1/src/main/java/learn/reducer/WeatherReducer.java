@@ -1,8 +1,8 @@
 package learn.reducer;
 
 import learn.util.InvalidData;
-import learn.WeatherConstants;
 import learn.domain.WeatherDataWritable;
+import learn.util.WeatherConstants;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
@@ -12,19 +12,6 @@ import java.io.IOException;
  * Created by 743522 on 23-10-2014.
  */
 public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Text>{
-
-//    private int groupByFieldIdx;
-//    private String maxOrMin = "";
-//    private int valFieldIdx;
-//
-//    @Override
-//    protected void setup(Context context) throws IOException, InterruptedException {
-//        Configuration config = context.getConfiguration();
-//        groupByFieldIdx = config.getInt("", 0);
-//        valFieldIdx = config.getInt("", 0);
-//        maxOrMin = config.get("", "MAX");
-//        super.setup(context);
-//    }
 
     private float minTemp = 0.0F;
     private float maxTemp = 0.0F;
@@ -58,7 +45,7 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
         for(WeatherDataWritable datum : values){
             if(datum.getTemp().get() != WeatherConstants.INVALID_TEMP){
                 minTemp = datum.getTemp().get();
-                minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();:
+                minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();
                 maxTemp = maxTemp > datum.getTemp().get() ? maxTemp : datum.getTemp().get();
             } else {
                 context.getCounter(InvalidData.TEMP_MISSING).increment(1);

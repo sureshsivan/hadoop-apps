@@ -1,16 +1,15 @@
 package learn.parser.spi;
 
 import learn.domain.WeatherData1;
+import learn.parser.Parseble;
 import learn.parser.Parser;
 import learn.util.WeatherConstants;
-import org.apache.hadoop.io.FloatWritable;
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 
 /**
  * Created by suren on 8/1/15.
  */
-public class WeatherData1Parser implements Parser<WeatherData1>{
+public class WeatherData1Parser<T extends Parseble> implements Parser<WeatherData1> {
 
     private String split;
 

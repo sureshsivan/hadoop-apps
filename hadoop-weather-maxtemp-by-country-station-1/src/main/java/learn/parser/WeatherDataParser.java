@@ -5,6 +5,8 @@ import org.apache.hadoop.io.Text;
 /**
  * Created by suren on 8/1/15.
  */
-public interface Parser<T extends Parseble> {
+public interface WeatherDataParser<T> {
+
     public T parseFromText(Text txtData);
+
 }
