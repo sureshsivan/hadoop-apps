@@ -58,7 +58,7 @@ public class WeatherReducer extends Reducer<Text, WeatherDataWritable, Text, Tex
         for(WeatherDataWritable datum : values){
             if(datum.getTemp().get() != WeatherConstants.INVALID_TEMP){
                 minTemp = datum.getTemp().get();
-                minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();
+                minTemp = minTemp < datum.getTemp().get() ? minTemp : datum.getTemp().get();:
                 maxTemp = maxTemp > datum.getTemp().get() ? maxTemp : datum.getTemp().get();
             } else {
                 context.getCounter(InvalidData.TEMP_MISSING).increment(1);
