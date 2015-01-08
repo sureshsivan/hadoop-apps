@@ -246,6 +246,7 @@
         <module>hadoop-weather-hbase-dataload</module>
         <module>hadoop-weather-max-temp-spark</module>
         <module>hadoop-spark</module>
+        <module>hadoop-weather-maxtemp-by-country-station-1</module>
     </modules>
 
 </project>
