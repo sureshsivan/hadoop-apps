@@ -18,6 +18,20 @@ public class WeatherConstants {
     public static final float NO_PERCIPITATION = 0.00F;
     public static final float INVALID_SNOWDEPTH = 999.9F;
 
+    public static final String STR_INDICATOR_FLAG_ONE = "1";
+    public static final String STR_INDICATOR_FLAG_ZERO = "0";
+    public static final char CHAR_INDICATOR_FLAG_ONE = '1';
+    public static final char CHAR_INDICATOR_FLAG_ZERO = '0';
+    public static final String STR_INDICATOR_FLAG_ASTERICK = "*";
+
+    public static final int FRSHTT_FOG_DAY_DATA_INDEX = 0;
+    public static final int FRSHTT_RAIN_OR_DRIZZLE__DAY_DATA_INDEX = 0;
+    public static final int FRSHTT_SNOW_OR_ICE_PELLET_DAY_DATA_INDEX = 0;
+    public static final int FRSHTT_HAIL_DAY_DATA_INDEX = 0;
+    public static final int FRSHTT_THUNDER_DAY_DATA_INDEX = 0;
+    public static final int FRSHTT_TORNADO_OR_FUNNEL_CLOUD_DAY_DATA_INDEX = 0;
+    
+
 //    public static final float INVALID_VISIBILITY = 999.0F;
 //    public static final float INVALID_PERCIPITATION = 99.9F;
 

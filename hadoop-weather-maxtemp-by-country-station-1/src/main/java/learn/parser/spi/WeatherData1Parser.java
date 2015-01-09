@@ -32,9 +32,9 @@ public class WeatherData1Parser<T extends Parseble> implements Parser<WeatherDat
     public WeatherData1 parseFromText(String stringData) {
         WeatherData1 data = new WeatherData1();
         String[] dataSplit = stringData.split(getSplit());
-        data.setYear(Integer.parseInt(dataSplit[1].substring(0, 4)));
-        data.setMonth(Integer.parseInt(dataSplit[1].substring(4, 6)));
-        data.setDay(Integer.parseInt(dataSplit[1].substring(6, 8)));
+        data.setYear(Integer.parseInt(dataSplit[1].substring(0, 4)));   // 1-4
+        data.setMonth(Integer.parseInt(dataSplit[1].substring(4, 6)));  // 5-6
+        data.setDay(Integer.parseInt(dataSplit[1].substring(6, 8)));    // 7-8
         data.setTemp(Float.parseFloat(dataSplit[2]));
         data.setWindspeed(Float.parseFloat(dataSplit[3]));
         data.setVisibility(Float.parseFloat(dataSplit[4]));

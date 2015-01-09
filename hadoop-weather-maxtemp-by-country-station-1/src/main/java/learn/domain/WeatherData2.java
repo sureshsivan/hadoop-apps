@@ -2,7 +2,6 @@ package learn.domain;
 
 import learn.parser.Parseble;
 import learn.parser.Parser;
-import learn.parser.spi.WeatherData1Parser;
 import learn.parser.spi.WeatherData2Parser;
 
 /**
@@ -27,7 +26,7 @@ public class WeatherData2 implements Parseble {
     private int seaLvlPressureReadCnt;
 
     private float stationPressure;
-    private int stationPressurePressureReadCnt;
+    private int stationPressureReadCnt;
 
     private float visibility;
     private int visibilityReadCnt;
@@ -150,12 +149,12 @@ public class WeatherData2 implements Parseble {
         this.stationPressure = stationPressure;
     }
 
-    public int getStationPressurePressureReadCnt() {
-        return stationPressurePressureReadCnt;
+    public int getStationPressureReadCnt() {
+        return stationPressureReadCnt;
     }
 
-    public void setStationPressurePressureReadCnt(int stationPressurePressureReadCnt) {
-        this.stationPressurePressureReadCnt = stationPressurePressureReadCnt;
+    public void setStationPressureReadCnt(int stationPressureReadCnt) {
+        this.stationPressureReadCnt = stationPressureReadCnt;
     }
 
     public float getVisibility() {
@@ -313,5 +312,43 @@ public class WeatherData2 implements Parseble {
     @Override
     public Parser<WeatherData2> getParser() {
         return new WeatherData2Parser<WeatherData2>();
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherData2{" +
+                "station=" + station +
+                ", wban=" + wban +
+                ", year=" + year +
+                ", month=" + month +
+                ", day=" + day +
+                ", temperature=" + temperature +
+                ", temperatureReadCnt=" + temperatureReadCnt +
+                ", dewPt=" + dewPt +
+                ", dewPtReadCnt=" + dewPtReadCnt +
+                ", seaLvlPressure=" + seaLvlPressure +
+                ", seaLvlPressureReadCnt=" + seaLvlPressureReadCnt +
+                ", stationPressure=" + stationPressure +
+                ", stationPressureReadCnt=" + stationPressureReadCnt +
+                ", visibility=" + visibility +
+                ", visibilityReadCnt=" + visibilityReadCnt +
+                ", windspeed=" + windspeed +
+                ", windspeedReadCnt=" + windspeedReadCnt +
+                ", maxSustainedWindspeedForDay=" + maxSustainedWindspeedForDay +
+                ", maxWindGustForDay=" + maxWindGustForDay +
+                ", maxTemperatureForDay=" + maxTemperatureForDay +
+                ", maxTempDerivedFromHourlyData=" + maxTempDerivedFromHourlyData +
+                ", minTemperatureForDay=" + minTemperatureForDay +
+                ", minTempDerivedFromHourlyData=" + minTempDerivedFromHourlyData +
+                ", percipitation=" + percipitation +
+                ", snowDepth=" + snowDepth +
+                ", frshttIndicator='" + frshttIndicator + '\'' +
+                ", fogDay=" + fogDay +
+                ", rainOrDrizzleDay=" + rainOrDrizzleDay +
+                ", snowOrIcePelletDay=" + snowOrIcePelletDay +
+                ", hailDay=" + hailDay +
+                ", thunderDay=" + thunderDay +
+                ", tornadoOrFunnelCloudDay=" + tornadoOrFunnelCloudDay +
+                '}';
     }
 }
