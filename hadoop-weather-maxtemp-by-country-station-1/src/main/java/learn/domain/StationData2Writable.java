@@ -9,7 +9,7 @@ import java.io.IOException;
 /**
  * Created by suren on 24/10/14.
  */
-public class CountryData2Writable implements Writable {
+public class StationData2Writable implements Writable {
 
     private IntWritable station = new IntWritable();
     private IntWritable wban = new IntWritable();
@@ -20,8 +20,8 @@ public class CountryData2Writable implements Writable {
     private FloatWritable longitude = new FloatWritable();
     private FloatWritable elevation = new FloatWritable();
 
-    public static CountryData2Writable getCountryData2Writable(CountryData2 countryData2){
-        CountryData2Writable writable = new CountryData2Writable();
+    public static StationData2Writable getCountryData2Writable(StationData2 countryData2){
+        StationData2Writable writable = new StationData2Writable();
         return writable;
     }
 

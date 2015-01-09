@@ -2,13 +2,12 @@ package learn.domain;
 
 import learn.parser.Parseble;
 import learn.parser.Parser;
-import learn.parser.spi.CountryData2Parser;
-import learn.parser.spi.WeatherData2Parser;
+import learn.parser.spi.StationData2Parser;
 
 /**
  * Created by suren on 24/10/14.
  */
-public class CountryData2 implements Parseble {
+public class StationData2 implements Parseble {
 
     private int station;
     private int wban;
@@ -84,8 +83,8 @@ public class CountryData2 implements Parseble {
     }
 
     @Override
-    public Parser<CountryData2> getParser() {
-        return new CountryData2Parser<CountryData2>();
+    public Parser<StationData2> getParser() {
+        return new StationData2Parser<StationData2>();
     }
 
     @Override

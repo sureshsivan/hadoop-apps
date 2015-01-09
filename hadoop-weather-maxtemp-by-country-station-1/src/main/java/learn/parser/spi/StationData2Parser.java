@@ -1,7 +1,6 @@
 package learn.parser.spi;
 
-import learn.domain.CountryData2;
-import learn.domain.WeatherData1;
+import learn.domain.StationData2;
 import learn.parser.Parseble;
 import learn.parser.Parser;
 import learn.util.WeatherConstants;
@@ -10,7 +9,7 @@ import org.apache.hadoop.io.Text;
 /**
  * Created by suren on 8/1/15.
  */
-public class CountryData2Parser<T extends Parseble> implements Parser<CountryData2> {
+public class StationData2Parser<T extends Parseble> implements Parser<StationData2> {
 
     private String split;
 
@@ -25,13 +24,13 @@ public class CountryData2Parser<T extends Parseble> implements Parser<CountryDat
     }
 
     @Override
-    public CountryData2 parseFromText(Text rawTxt) {
+    public StationData2 parseFromText(Text rawTxt) {
         return parseFromText(rawTxt.toString());
     }
 
     @Override
-    public CountryData2 parseFromText(String stringData) {
-        CountryData2 data = new CountryData2();
+    public StationData2 parseFromText(String stringData) {
+        StationData2 data = new StationData2();
         String[] dataSplit = stringData.split(getSplit());
         data.setStation(Integer.parseInt(dataSplit[0]));
         data.setWban(Integer.parseInt(dataSplit[1]));
