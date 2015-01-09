@@ -25,8 +25,13 @@ public class WeatherData1Parser<T extends Parseble> implements Parser<WeatherDat
 
     @Override
     public WeatherData1 parseFromText(Text rawTxt) {
+        return parseFromText(rawTxt.toString());
+    }
+
+    @Override
+    public WeatherData1 parseFromText(String stringData) {
         WeatherData1 data = new WeatherData1();
-        String[] dataSplit = rawTxt.toString().split(getSplit());
+        String[] dataSplit = stringData.split(getSplit());
         data.setYear(Integer.parseInt(dataSplit[1].substring(0, 4)));
         data.setMonth(Integer.parseInt(dataSplit[1].substring(4, 6)));
         data.setDay(Integer.parseInt(dataSplit[1].substring(6, 8)));

@@ -7,4 +7,5 @@ import org.apache.hadoop.io.Text;
  */
 public interface Parser<T extends Parseble> {
     public T parseFromText(Text txtData);
+    public T parseFromText(String stringData);
 }
