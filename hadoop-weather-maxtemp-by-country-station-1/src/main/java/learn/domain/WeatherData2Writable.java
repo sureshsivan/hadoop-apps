@@ -56,6 +56,267 @@ public class WeatherData2Writable implements Writable {
     private BooleanWritable tornadoOrFunnelCloudDay = new BooleanWritable();
 
 
+    public static WeatherData2Writable getWeatherData2Writable(WeatherData2 weatherData2){
+        WeatherData2Writable writable = new WeatherData2Writable();
+        return writable;
+    }
+
+    public IntWritable getStation() {
+        return station;
+    }
+
+    public void setStation(IntWritable station) {
+        this.station = station;
+    }
+
+    public IntWritable getWban() {
+        return wban;
+    }
+
+    public void setWban(IntWritable wban) {
+        this.wban = wban;
+    }
+
+    public IntWritable getYear() {
+        return year;
+    }
+
+    public void setYear(IntWritable year) {
+        this.year = year;
+    }
+
+    public IntWritable getMonth() {
+        return month;
+    }
+
+    public void setMonth(IntWritable month) {
+        this.month = month;
+    }
+
+    public IntWritable getDay() {
+        return day;
+    }
+
+    public void setDay(IntWritable day) {
+        this.day = day;
+    }
+
+    public FloatWritable getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(FloatWritable temperature) {
+        this.temperature = temperature;
+    }
+
+    public IntWritable getTemperatureReadCnt() {
+        return temperatureReadCnt;
+    }
+
+    public void setTemperatureReadCnt(IntWritable temperatureReadCnt) {
+        this.temperatureReadCnt = temperatureReadCnt;
+    }
+
+    public FloatWritable getDewPt() {
+        return dewPt;
+    }
+
+    public void setDewPt(FloatWritable dewPt) {
+        this.dewPt = dewPt;
+    }
+
+    public IntWritable getDewPtReadCnt() {
+        return dewPtReadCnt;
+    }
+
+    public void setDewPtReadCnt(IntWritable dewPtReadCnt) {
+        this.dewPtReadCnt = dewPtReadCnt;
+    }
+
+    public FloatWritable getSeaLvlPressure() {
+        return seaLvlPressure;
+    }
+
+    public void setSeaLvlPressure(FloatWritable seaLvlPressure) {
+        this.seaLvlPressure = seaLvlPressure;
+    }
+
+    public IntWritable getSeaLvlPressureReadCnt() {
+        return seaLvlPressureReadCnt;
+    }
+
+    public void setSeaLvlPressureReadCnt(IntWritable seaLvlPressureReadCnt) {
+        this.seaLvlPressureReadCnt = seaLvlPressureReadCnt;
+    }
+
+    public FloatWritable getStationPressure() {
+        return stationPressure;
+    }
+
+    public void setStationPressure(FloatWritable stationPressure) {
+        this.stationPressure = stationPressure;
+    }
+
+    public IntWritable getStationPressureReadCnt() {
+        return stationPressureReadCnt;
+    }
+
+    public void setStationPressureReadCnt(IntWritable stationPressureReadCnt) {
+        this.stationPressureReadCnt = stationPressureReadCnt;
+    }
+
+    public FloatWritable getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(FloatWritable visibility) {
+        this.visibility = visibility;
+    }
+
+    public IntWritable getVisibilityReadCnt() {
+        return visibilityReadCnt;
+    }
+
+    public void setVisibilityReadCnt(IntWritable visibilityReadCnt) {
+        this.visibilityReadCnt = visibilityReadCnt;
+    }
+
+    public FloatWritable getWindspeed() {
+        return windspeed;
+    }
+
+    public void setWindspeed(FloatWritable windspeed) {
+        this.windspeed = windspeed;
+    }
+
+    public IntWritable getWindspeedReadCnt() {
+        return windspeedReadCnt;
+    }
+
+    public void setWindspeedReadCnt(IntWritable windspeedReadCnt) {
+        this.windspeedReadCnt = windspeedReadCnt;
+    }
+
+    public FloatWritable getMaxSustainedWindspeedForDay() {
+        return maxSustainedWindspeedForDay;
+    }
+
+    public void setMaxSustainedWindspeedForDay(FloatWritable maxSustainedWindspeedForDay) {
+        this.maxSustainedWindspeedForDay = maxSustainedWindspeedForDay;
+    }
+
+    public FloatWritable getMaxWindGustForDay() {
+        return maxWindGustForDay;
+    }
+
+    public void setMaxWindGustForDay(FloatWritable maxWindGustForDay) {
+        this.maxWindGustForDay = maxWindGustForDay;
+    }
+
+    public FloatWritable getMaxTemperatureForDay() {
+        return maxTemperatureForDay;
+    }
+
+    public void setMaxTemperatureForDay(FloatWritable maxTemperatureForDay) {
+        this.maxTemperatureForDay = maxTemperatureForDay;
+    }
+
+    public BooleanWritable getMaxTempDerivedFromHourlyData() {
+        return maxTempDerivedFromHourlyData;
+    }
+
+    public void setMaxTempDerivedFromHourlyData(BooleanWritable maxTempDerivedFromHourlyData) {
+        this.maxTempDerivedFromHourlyData = maxTempDerivedFromHourlyData;
+    }
+
+    public FloatWritable getMinTemperatureForDay() {
+        return minTemperatureForDay;
+    }
+
+    public void setMinTemperatureForDay(FloatWritable minTemperatureForDay) {
+        this.minTemperatureForDay = minTemperatureForDay;
+    }
+
+    public BooleanWritable getMinTempDerivedFromHourlyData() {
+        return minTempDerivedFromHourlyData;
+    }
+
+    public void setMinTempDerivedFromHourlyData(BooleanWritable minTempDerivedFromHourlyData) {
+        this.minTempDerivedFromHourlyData = minTempDerivedFromHourlyData;
+    }
+
+    public FloatWritable getPercipitation() {
+        return percipitation;
+    }
+
+    public void setPercipitation(FloatWritable percipitation) {
+        this.percipitation = percipitation;
+    }
+
+    public FloatWritable getSnowDepth() {
+        return snowDepth;
+    }
+
+    public void setSnowDepth(FloatWritable snowDepth) {
+        this.snowDepth = snowDepth;
+    }
+
+    public Text getFrshttIndicator() {
+        return frshttIndicator;
+    }
+
+    public void setFrshttIndicator(Text frshttIndicator) {
+        this.frshttIndicator = frshttIndicator;
+    }
+
+    public BooleanWritable getFogDay() {
+        return fogDay;
+    }
+
+    public void setFogDay(BooleanWritable fogDay) {
+        this.fogDay = fogDay;
+    }
+
+    public BooleanWritable getRainOrDrizzleDay() {
+        return rainOrDrizzleDay;
+    }
+
+    public void setRainOrDrizzleDay(BooleanWritable rainOrDrizzleDay) {
+        this.rainOrDrizzleDay = rainOrDrizzleDay;
+    }
+
+    public BooleanWritable getSnowOrIcePelletDay() {
+        return snowOrIcePelletDay;
+    }
+
+    public void setSnowOrIcePelletDay(BooleanWritable snowOrIcePelletDay) {
+        this.snowOrIcePelletDay = snowOrIcePelletDay;
+    }
+
+    public BooleanWritable getHailDay() {
+        return hailDay;
+    }
+
+    public void setHailDay(BooleanWritable hailDay) {
+        this.hailDay = hailDay;
+    }
+
+    public BooleanWritable getThunderDay() {
+        return thunderDay;
+    }
+
+    public void setThunderDay(BooleanWritable thunderDay) {
+        this.thunderDay = thunderDay;
+    }
+
+    public BooleanWritable getTornadoOrFunnelCloudDay() {
+        return tornadoOrFunnelCloudDay;
+    }
+
+    public void setTornadoOrFunnelCloudDay(BooleanWritable tornadoOrFunnelCloudDay) {
+        this.tornadoOrFunnelCloudDay = tornadoOrFunnelCloudDay;
+    }
+
     @Override
     public String toString() {
         return "WeatherData2{" +

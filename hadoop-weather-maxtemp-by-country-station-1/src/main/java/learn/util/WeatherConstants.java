@@ -30,7 +30,9 @@ public class WeatherConstants {
     public static final int FRSHTT_HAIL_DAY_DATA_INDEX = 0;
     public static final int FRSHTT_THUNDER_DAY_DATA_INDEX = 0;
     public static final int FRSHTT_TORNADO_OR_FUNNEL_CLOUD_DAY_DATA_INDEX = 0;
-    
+
+    public static final String WEATHER_DATA_2_HEADER_STARTS_WITH = "STN---";
+    public static final String COUNTRY_DATA_2_HEADER_STARTS_WITH = "FIPS ID";
 
 //    public static final float INVALID_VISIBILITY = 999.0F;
 //    public static final float INVALID_PERCIPITATION = 99.9F;
