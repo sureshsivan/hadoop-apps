@@ -3,6 +3,10 @@ package learn.domain;
 import learn.parser.Parseble;
 import learn.parser.Parser;
 import learn.parser.spi.WeatherData2Parser;
+import org.apache.hadoop.io.BooleanWritable;
+import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 
 /**
  * Created by suren on 24/10/14.
@@ -309,6 +313,43 @@ public class WeatherData2 implements Parseble {
         this.tornadoOrFunnelCloudDay = tornadoOrFunnelCloudDay;
     }
 
+    public WeatherData2Writable getWeatherData2Writable(){
+        WeatherData2Writable writable = new WeatherData2Writable();
+        writable.setStation(new IntWritable(getStation()));
+        writable.setWban(new IntWritable(getWban()));
+        writable.setYear(new IntWritable(getYear()));
+        writable.setMonth(new IntWritable(getMonth()));
+        writable.setDay(new IntWritable(getDay()));
+        writable.setTemperature(new FloatWritable(getTemperature()));
+        writable.setTemperatureReadCnt(new IntWritable(getTemperatureReadCnt()));
+        writable.setDewPt(new FloatWritable(getDewPt()));
+        writable.setDewPtReadCnt(new IntWritable(getDewPtReadCnt()));
+        writable.setSeaLvlPressure(new FloatWritable(getSeaLvlPressure()));
+        writable.setSeaLvlPressureReadCnt(new IntWritable(getSeaLvlPressureReadCnt()));
+        writable.setStationPressure(new FloatWritable(getStationPressure()));
+        writable.setStationPressureReadCnt(new IntWritable(getStationPressureReadCnt()));
+        writable.setVisibility(new FloatWritable(getVisibility()));
+        writable.setVisibilityReadCnt(new IntWritable(getVisibilityReadCnt()));
+        writable.setWindspeed(new FloatWritable(getWindspeed()));
+        writable.setWindspeedReadCnt(new IntWritable(getWindspeedReadCnt()));
+        writable.setMaxSustainedWindspeedForDay(new FloatWritable(getMaxSustainedWindspeedForDay()));
+        writable.setMaxWindGustForDay(new FloatWritable(getMaxWindGustForDay()));
+        writable.setMaxTemperatureForDay(new FloatWritable(getMaxTemperatureForDay()));
+        writable.setMaxTempDerivedFromHourlyData(new BooleanWritable(isMaxTempDerivedFromHourlyData()));
+        writable.setMinTemperatureForDay(new FloatWritable(getMinTemperatureForDay()));
+        writable.setMinTempDerivedFromHourlyData(new BooleanWritable(isMinTempDerivedFromHourlyData()));
+        writable.setPercipitation(new FloatWritable(getPercipitation()));
+        writable.setSnowDepth(new FloatWritable(getSnowDepth()));
+        writable.setFrshttIndicator(new Text(getFrshttIndicator()));
+        writable.setFogDay(new BooleanWritable(isFogDay()));
+        writable.setRainOrDrizzleDay(new BooleanWritable(isRainOrDrizzleDay()));
+        writable.setSnowOrIcePelletDay(new BooleanWritable(isSnowOrIcePelletDay()));
+        writable.setHailDay(new BooleanWritable(isHailDay()));
+        writable.setThunderDay(new BooleanWritable(isThunderDay()));
+        writable.setTornadoOrFunnelCloudDay(new BooleanWritable(isTornadoOrFunnelCloudDay()));
+        return writable;
+    }
+    
     @Override
     public Parser<WeatherData2> getParser() {
         return new WeatherData2Parser<WeatherData2>();

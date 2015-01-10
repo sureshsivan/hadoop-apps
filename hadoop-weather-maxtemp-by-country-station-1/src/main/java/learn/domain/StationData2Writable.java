@@ -90,6 +90,7 @@ public class StationData2Writable implements Writable {
         this.elevation = elevation;
     }
 
+
     @Override
     public void write(DataOutput out) throws IOException {
         try {

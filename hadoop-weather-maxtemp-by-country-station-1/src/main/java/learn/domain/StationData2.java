@@ -3,6 +3,9 @@ package learn.domain;
 import learn.parser.Parseble;
 import learn.parser.Parser;
 import learn.parser.spi.StationData2Parser;
+import org.apache.hadoop.io.FloatWritable;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
 
 /**
  * Created by suren on 24/10/14.
@@ -80,6 +83,19 @@ public class StationData2 implements Parseble {
 
     public void setElevation(float elevation) {
         this.elevation = elevation;
+    }
+
+    public StationData2Writable getStationData2Writable(){
+        StationData2Writable writable = new StationData2Writable();
+        writable.setStation(new IntWritable(getStation()));
+        writable.setWban(new IntWritable(getWban()));
+        writable.setStationName(new Text(getStationName()));
+        writable.setCountryCode(new Text(getCountryCode()));
+        writable.setStateCodeUs(new Text(getStateCodeUs()));
+        writable.setLatitude(new FloatWritable(getLatitude()));
+        writable.setLongitude(new FloatWritable(getLongitude()));
+        writable.setElevation(new FloatWritable(getElevation()));
+        return writable;
     }
 
     @Override
