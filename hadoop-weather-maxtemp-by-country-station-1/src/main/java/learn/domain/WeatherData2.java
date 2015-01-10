@@ -57,6 +57,9 @@ public class WeatherData2 implements Parseble {
     private boolean thunderDay;
     private boolean tornadoOrFunnelCloudDay;
 
+    private StationData2 stationData;
+    private CountryDataData2 countryData;
+
     public int getStation() {
         return station;
     }
@@ -313,6 +316,22 @@ public class WeatherData2 implements Parseble {
         this.tornadoOrFunnelCloudDay = tornadoOrFunnelCloudDay;
     }
 
+    public StationData2 getStationData() {
+        return stationData;
+    }
+
+    public void setStationData(StationData2 stationData) {
+        this.stationData = stationData;
+    }
+
+    public CountryDataData2 getCountryData() {
+        return countryData;
+    }
+
+    public void setCountryData(CountryDataData2 countryData) {
+        this.countryData = countryData;
+    }
+
     public WeatherData2Writable getWeatherData2Writable(){
         WeatherData2Writable writable = new WeatherData2Writable();
         writable.setStation(new IntWritable(getStation()));
@@ -347,6 +366,9 @@ public class WeatherData2 implements Parseble {
         writable.setHailDay(new BooleanWritable(isHailDay()));
         writable.setThunderDay(new BooleanWritable(isThunderDay()));
         writable.setTornadoOrFunnelCloudDay(new BooleanWritable(isTornadoOrFunnelCloudDay()));
+        writable.setStationData(getStationData().getStationData2Writable());
+        writable.setCountryData(getCountryData().getCountryDataData2Writable());
+
         return writable;
     }
     

@@ -94,7 +94,6 @@ public class StationData2Writable implements Writable {
     @Override
     public void write(DataOutput out) throws IOException {
         try {
-        } catch (Exception e) {
             station.write(out);
             wban.write(out);
             stationName.write(out);
@@ -103,6 +102,7 @@ public class StationData2Writable implements Writable {
             latitude.write(out);
             longitude.write(out);
             elevation.write(out);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -110,7 +110,6 @@ public class StationData2Writable implements Writable {
     @Override
     public void readFields(DataInput in) throws IOException {
         try {
-        } catch (Exception e) {
             station.readFields(in);
             wban.readFields(in);
             stationName.readFields(in);
@@ -119,6 +118,7 @@ public class StationData2Writable implements Writable {
             latitude.readFields(in);
             longitude.readFields(in);
             elevation.readFields(in);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

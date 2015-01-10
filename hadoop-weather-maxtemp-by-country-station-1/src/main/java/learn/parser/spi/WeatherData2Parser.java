@@ -53,6 +53,9 @@ public class WeatherData2Parser<T extends Parseble> implements Parser<WeatherDat
         data.setThunderDay(WeatherConstants.CHAR_INDICATOR_FLAG_ONE == data.getFrshttIndicator().charAt(WeatherConstants.FRSHTT_THUNDER_DAY_DATA_INDEX));
         data.setTornadoOrFunnelCloudDay(WeatherConstants.CHAR_INDICATOR_FLAG_ONE == data.getFrshttIndicator().charAt(WeatherConstants.FRSHTT_TORNADO_OR_FUNNEL_CLOUD_DAY_DATA_INDEX));
 
+        data.setStationData(null);  //  parse Station Data from distributed cache
+        data.setCountryData(null);  //  parse Country Data from distributed cache
+
         return data;
     }
 

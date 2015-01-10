@@ -56,6 +56,9 @@ public class WeatherData2Writable implements Writable {
     private BooleanWritable tornadoOrFunnelCloudDay = new BooleanWritable();
 
 
+    private StationData2Writable stationData = new StationData2Writable();
+    private CountryDataData2Writable countryData = new CountryDataData2Writable();
+
     public static WeatherData2Writable getWeatherData2Writable(WeatherData2 weatherData2){
         WeatherData2Writable writable = new WeatherData2Writable();
         return writable;
@@ -317,9 +320,25 @@ public class WeatherData2Writable implements Writable {
         this.tornadoOrFunnelCloudDay = tornadoOrFunnelCloudDay;
     }
 
+    public StationData2Writable getStationData() {
+        return stationData;
+    }
+
+    public void setStationData(StationData2Writable stationData) {
+        this.stationData = stationData;
+    }
+
+    public CountryDataData2Writable getCountryData() {
+        return countryData;
+    }
+
+    public void setCountryData(CountryDataData2Writable countryData) {
+        this.countryData = countryData;
+    }
+
     @Override
     public String toString() {
-        return "WeatherData2{" +
+        return "WeatherData2Writable{" +
                 "station=" + station +
                 ", wban=" + wban +
                 ", year=" + year +
@@ -345,13 +364,15 @@ public class WeatherData2Writable implements Writable {
                 ", minTempDerivedFromHourlyData=" + minTempDerivedFromHourlyData +
                 ", percipitation=" + percipitation +
                 ", snowDepth=" + snowDepth +
-                ", frshttIndicator='" + frshttIndicator + '\'' +
+                ", frshttIndicator=" + frshttIndicator +
                 ", fogDay=" + fogDay +
                 ", rainOrDrizzleDay=" + rainOrDrizzleDay +
                 ", snowOrIcePelletDay=" + snowOrIcePelletDay +
                 ", hailDay=" + hailDay +
                 ", thunderDay=" + thunderDay +
                 ", tornadoOrFunnelCloudDay=" + tornadoOrFunnelCloudDay +
+                ", stationData=" + stationData +
+                ", countryData=" + countryData +
                 '}';
     }
 
@@ -381,8 +402,18 @@ public class WeatherData2Writable implements Writable {
             hailDay.write(out);
             thunderDay.write(out);
             tornadoOrFunnelCloudDay.write(out);
+
+            stationData.write(out);
+            countryData.write(out);
+
+//            if(stationData != null){
+//                stationData.write(out);
+//            }
+//            if(countryData != null){
+//                countryData.write(out);
+//            }
+
         } catch (Exception e) {
-            this.toString();
             e.printStackTrace();
         }
     }
@@ -413,8 +444,18 @@ public class WeatherData2Writable implements Writable {
             hailDay.readFields(in);
             thunderDay.readFields(in);
             tornadoOrFunnelCloudDay.readFields(in);
+
+            stationData.readFields(in);
+            countryData.readFields(in);
+
+//            if(stationData != null){
+//                stationData.readFields(in);
+//            }
+//            if(countryData != null){
+//                countryData.readFields(in);
+//            }
+
         } catch (Exception e) {
-            this.toString();
             e.printStackTrace();
         }
     }
