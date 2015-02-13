@@ -29,7 +29,6 @@ public class WeatherDataParserDriver extends Configured implements Tool {
 
         Job job = new Job(getConf());
         job.setJarByClass(getClass());
-
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(TextOutputFormat.class);
 
