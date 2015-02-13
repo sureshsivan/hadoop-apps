@@ -1,6 +1,7 @@
 # Created by .gitignore support plugin (hsz.mobi)
 
 .idea/
+build/
 *.iml
 
 ### Maven template

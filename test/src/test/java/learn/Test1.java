@@ -16,7 +16,7 @@ import java.io.*;
 public class Test1 {
 
 
-    @Test
+//    @Test
     public void testIntegerToHex() throws IOException {
 //        System.out.println(StringUtils.("1"));
 //        IntWritable i1 = new IntWritable(-5);
@@ -46,16 +46,16 @@ public class Test1 {
 //                "aswruhgtfqaouiwerhc oqurtyhfoiuweryhtoiuweyvtoiwueytoiqwuerhgtowiughtvoiwerytvowieurytvoqiwueryt5voqiuwerytoqiuwehrfpoqIWERBHGFOIQWHVCGFNPOIQWERUHTPQO WUEHYTPOQWUEHTPOQWVNPIOWUERHTEWA" +
 //                "aswruhgtfqaouiwerhc oqurtyhfoiuweryhtoiuweyvtoiwueytoiqwuerhgtowiughtvoiwerytvowieurytvoqiwueryt5voqiuwerytoqiuwehrfpoqIWERBHGFOIQWHVCGFNPOIQWERUHTPQO WUEHYTPOQWUEHTPOQWVNPIOWUERHTEWA" +
                 "");
-        byte[] ba = serialize(t);
+//        byte[] ba = serialize(t);
 //        for (byte b : ba){
 //            System.out.println(b);
 //        }
-        System.out.println(t.getLength());
+//        System.out.println(t.getLength());
 //        System.out.println(t.);
-        System.out.println(ba.length);
-        WritableComparator wc = WritableComparator.get(Text.class);
-        System.out.println(WritableUtils.decodeVIntSize(ba[0]));
-        System.out.println(WritableComparator.readVInt(ba, 0));
+//        System.out.println(ba.length);
+//        WritableComparator wc = WritableComparator.get(Text.class);
+//        System.out.println(WritableUtils.decodeVIntSize(ba[0]));
+//        System.out.println(WritableComparator.readVInt(ba, 0));
 
 //        Serialization
 //        Serializer
