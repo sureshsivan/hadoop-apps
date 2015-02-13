@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hadoopMaxTempByCountryStation</artifactId>
+    <artifactId>hadoopMaxTempByCountryStation1</artifactId>
 
 
 </project>
