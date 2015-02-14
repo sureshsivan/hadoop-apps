@@ -1,11 +1,9 @@
 package learn;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileStatus;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.hdfs.MiniDFSCluster;
-import org.apache.hadoop.test.MiniDFSClusterManager;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -28,6 +26,9 @@ public class HdfsFileSystemTest {
         Configuration conf = new Configuration();
         cluster = new MiniDFSCluster.Builder(conf).build();
         fs = cluster.getFileSystem();
+        FSDataOutputStream fsos = fs.create(new Path("/dir/file"));
+        fsos.write("Suresh".getBytes("UTF-8"));
+        fsos.close();
     }
 
 
@@ -41,7 +42,7 @@ public class HdfsFileSystemTest {
             expectedExceptions = {FileNotFoundException.class,
                                     IOException.class})
     public void accessUnknownFile() throws IOException {
-        System.out.println(fs.getFileStatus(new Path("/")));;
+        fs.getFileStatus(new Path("unknown-file"));
     }
 
     @Test(priority = 1)
@@ -50,6 +51,19 @@ public class HdfsFileSystemTest {
         assertNotNull(fStatus);
         assertEquals(fStatus.isDirectory(), true);
         assertEquals(fStatus.isSymlink(), false);
+    }
+
+    @Test(priority = 2)
+    public void testWrittenFile() throws IOException {
+        Path path = new Path("/dir/file");
+        FSDataInputStream fsis = fs.open(path);
+        FileStatus fStatus = fs.getFileStatus(path);
+//        Object o = fsis.readUTF();
+//        assertEquals(fsis.readUTF(), "Suresh");
+        assertEquals(fStatus.isDirectory(), false);
+        assertEquals(fStatus.isSymlink(), false);
+        assertEquals(fStatus.getLen(), 6L);
+        fsis.close();
     }
 
 }
