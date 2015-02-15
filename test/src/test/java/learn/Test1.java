@@ -6,7 +6,6 @@ import org.apache.hadoop.io.serializer.Deserializer;
 import org.apache.hadoop.io.serializer.Serialization;
 import org.apache.hadoop.io.serializer.Serializer;
 import org.apache.hadoop.util.StringUtils;
-import org.junit.Test;
 
 import java.io.*;
 

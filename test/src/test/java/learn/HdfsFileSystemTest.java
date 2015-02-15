@@ -16,26 +16,26 @@ import java.io.IOException;
  */
 public class HdfsFileSystemTest {
 
-    private MiniDFSCluster cluster;
-    private FileSystem fs;
-
-    @BeforeClass
-    public void setupCluster() throws IOException {
-        Configuration conf = new Configuration();
-        cluster = new MiniDFSCluster.Builder(conf).build();
-    }
-
-
-    @AfterClass
-    public void tearDownCluster() throws IOException {
-        if(fs != null)  fs.close();
-        if(cluster != null) cluster.shutdown();
-    }
-
-    @Test(priority = 0,
-            expectedExceptions = {FileNotFoundException.class,
-                                    IOException.class})
-    public void accessUnknownFile() throws IOException {
-        fs.getFileStatus(new Path("Some-unknown-file"));
-    }
+//    private MiniDFSCluster cluster;
+//    private FileSystem fs;
+//
+//    @BeforeClass
+//    public void setupCluster() throws IOException {
+//        Configuration conf = new Configuration();
+//        cluster = new MiniDFSCluster.Builder(conf).build();
+//    }
+//
+//
+//    @AfterClass
+//    public void tearDownCluster() throws IOException {
+//        if(fs != null)  fs.close();
+//        if(cluster != null) cluster.shutdown();
+//    }
+//
+//    @Test(priority = 0,
+//            expectedExceptions = {FileNotFoundException.class,
+//                                    IOException.class})
+//    public void accessUnknownFile() throws IOException {
+//        fs.getFileStatus(new Path("Some-unknown-file"));
+//    }
 }
