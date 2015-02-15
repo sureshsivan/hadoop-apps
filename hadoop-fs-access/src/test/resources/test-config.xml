@@ -17,7 +17,7 @@
     </property>
     <property>
         <name>height-color-arr</name>
-        <value>${height},${color}</value>
+        <value>${PATH}</value>
         <description></description>
     </property>
     <property>

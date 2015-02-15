@@ -25,8 +25,7 @@ public class HadoopConfigurationTest {
             System.out.println(prop.getValue());
             System.out.println("####################################");
         }
-
-        System.out.println(conf);
+        System.out.println(conf.get("height-color-arr"));
 
     }
 }
