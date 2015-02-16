@@ -1,6 +1,5 @@
 package learn;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;
 import org.apache.hadoop.hdfs.MiniDFSCluster;
@@ -8,14 +7,14 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static org.testng.Assert.*;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+
 /**
- * Created by 743522 on 13-02-2015.மையாக உழைத்து உயரத்துக்கு வர வேண்டியுள்ளது. வந்த பிறகு, 'உயரத்தைத் தொட்டு விட்டோமே...' என்று உழைப்பதை நிறுத்தி விட்டால், தொழிலில் விபத்து ஏற்பட்டு விடும். உழைப்பு என்பது வருமானத்துக்காக மட்டுமல்ல, உடல் ஆரோக்கியம் மற்றும் மன நிம்மதிக்காகவும்தான்!'' என்று விளக்கம் அளித்தார்.
-# படித்ததில் உணர்த
+ * Created by 743522 on 13-02-2015.
  */
 public class HdfsFileSystemTest {
 

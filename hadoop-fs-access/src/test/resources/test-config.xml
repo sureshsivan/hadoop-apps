@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<conmfiguration>
+<configuration>
     <property>
         <name>color</name>
         <value>blue</value>
@@ -25,6 +25,4 @@
         <value>hdfs://localhost:8020</value>
         <description></description>
     </property>
-
-    fs.defaultFS
-</conmfiguration>
+</configuration>

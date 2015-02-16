@@ -3,7 +3,6 @@ package learn;
 import org.apache.hadoop.conf.Configuration;
 import org.testng.annotations.Test;
 
-import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -16,15 +15,13 @@ public class HadoopConfigurationTest {
         Configuration conf = new Configuration();
         conf.addResource("test-config.xml");
 
-        Iterator<Map.Entry<String, String>> it = conf.iterator();
-
-        while(it.hasNext()){
-            Map.Entry<String, String> prop = it.next();
+        for(Map.Entry<String, String> entry: conf){
             System.out.println("####################################");
-            System.out.println(prop.getKey());
-            System.out.println(prop.getValue());
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
             System.out.println("####################################");
         }
+
         System.out.println(conf.get("height-color-arr"));
 
     }
